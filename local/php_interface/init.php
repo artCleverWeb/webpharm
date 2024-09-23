@@ -6,7 +6,6 @@ Loader::includeModule('catalog');
 
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
-require_once __DIR__ . '/lib/CatalogProductProviderCustom.php';
 require_once __DIR__ . '/userTypeProperty/usertypeyesno.php';
 
 Loader::includeModule('iblock');

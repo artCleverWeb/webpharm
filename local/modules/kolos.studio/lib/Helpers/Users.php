@@ -58,4 +58,28 @@ class Users
             'isAuth' => false,
         ];
     }
+
+    public static function getExperienced(int $userId): bool
+    {
+        $userInfo = UserTable::getRow([
+            'select' => [
+                'ID',
+                'UF_EXPERIENCED',
+                ],
+            'filter' => [
+                'ID' => $userId,
+            ],
+        ]);
+
+        if(isset($userInfo['UF_EXPERIENCE'])) {
+            $extended = $userInfo['UF_EXPERIENCE'] == 1;
+            $_SESSION[VAR_SESSION_USER_EXPERIENCED] = $extended;
+
+            return $extended;
+        }
+        
+        unset($_SESSION[VAR_SESSION_USER_EXPERIENCED]);
+
+        return false;
+    }
 }

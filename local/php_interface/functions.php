@@ -537,3 +537,16 @@ if (!function_exists('phone_mask')) {
         return preg_replace('/^7(\d{3})(\d{3})(\d{2})(\d{2})$/', '7 ($1) $2-$3-$4', $phoneNumber);
     }
 }
+
+function getUserExperienced(){
+    if(is_authorized() === true){
+        if(isset($_SESSION[VAR_SESSION_USER_EXPERIENCED])){
+            return $_SESSION[VAR_SESSION_USER_EXPERIENCED];
+        }
+        else{
+            return \Kolos\Studio\Helpers\Users::getExperienced(user_id());
+        }
+    }
+
+    return false;
+}

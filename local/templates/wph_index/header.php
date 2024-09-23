@@ -77,30 +77,24 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     </div>
                 </div>
             </a>
-            <nav class="menu-main navbar__menu-main">
-                <div class="menu-main__list">
-                    <div class="menu-main__item active">
-                        <a href="#" class="menu-main__item-link">
-                            <div class="menu-main__item-link-icon">
-                                <svg class="icon menu-main__item-link-icon-canvas"><use xlink:href="images/icons/icons.svg#icon-study"></use></svg>
-                            </div>
-                            <div class="menu-main__item-link-text">
-                                Как начать работать
-                            </div>
-                        </a>
-                    </div>
-                    <div class="menu-main__item">
-                        <a href="#" class="menu-main__item-link">
-                            <div class="menu-main__item-link-icon">
-                                <svg class="icon menu-main__item-link-icon-canvas"><use xlink:href="images/icons/icons.svg#icon-ruble"></use></svg>
-                            </div>
-                            <div class="menu-main__item-link-text">
-                                Заработать больше
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </nav>
+            <?php
+            $APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "main",
+                [
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "left",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "1",
+                    "MENU_CACHE_GET_VARS" =>[""],
+                    "MENU_CACHE_TIME" => "3600",
+                    "MENU_CACHE_TYPE" => "A",
+                    "MENU_CACHE_USE_GROUPS" => "Y",
+                    "ROOT_MENU_TYPE" => "top",
+                    "USE_EXT" => "N",
+                    "EXTENDED_MODE" => getUserExperienced(),
+                ]
+            );?>
 
             <div class="navbar__footer">
                 <label class="input-button-a navbar__option">
