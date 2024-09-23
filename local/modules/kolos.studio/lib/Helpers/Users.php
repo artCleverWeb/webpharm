@@ -71,14 +71,28 @@ class Users
             ],
         ]);
 
-        if(isset($userInfo['UF_EXPERIENCE'])) {
-            $extended = $userInfo['UF_EXPERIENCE'] == 1;
+        if(isset($userInfo['UF_EXPERIENCED'])) {
+            $extended = $userInfo['UF_EXPERIENCED'] == 1;
             $_SESSION[VAR_SESSION_USER_EXPERIENCED] = $extended;
 
             return $extended;
         }
-        
+
         unset($_SESSION[VAR_SESSION_USER_EXPERIENCED]);
+
+        return false;
+    }
+
+    public static function setExperienced(int $userId, bool $state): bool
+    {
+
+        $userClass = new \CUser();
+        $userClass->Update($userId, ['UF_EXPERIENCED' => 1]);
+
+        if($userClass->LAST_ERROR == '') {
+            $_SESSION[VAR_SESSION_USER_EXPERIENCED] = $state;
+            return true;
+        }
 
         return false;
     }

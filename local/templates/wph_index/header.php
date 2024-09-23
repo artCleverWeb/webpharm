@@ -96,15 +96,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 ]
             );?>
 
-            <div class="navbar__footer">
-                <label class="input-button-a navbar__option">
-                    <input type="checkbox" class="input-button-a__input" disabled />
-                    <span class="input-button-a__icon"></span>
-                    <span class="input-button-a__text">
-					Опытный сотрудник
-				</span>
-                </label>
-            </div>
+            <?php
+            $APPLICATION->IncludeComponent(
+                "kolos.studio:user.mode",
+                "",
+                [
+                ]
+            );?>
         </div>
     </div>
     <div class="cnt page__cnt">
