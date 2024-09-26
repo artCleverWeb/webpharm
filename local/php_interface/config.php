@@ -1,3 +1,14 @@
 <?php
 
 define('VAR_SESSION_USER_EXPERIENCED', 'USER_EXTENDED'); // Название переменной в сессии, которая хранит значение Опытный пользователь
+
+define('IBLOCK_ID_COURSES', 2); // ID ИБ "Курсы"
+
+
+define('IBLOCK_SECTION_CODE_START_WORK', 'start-working'); // Символьный код раздела "Начать работать" ИБ "Курсы"
+define('IBLOCK_SECTION_CODE_EARN_MORE', 'earn-more'); // Символьный код раздела "Заработать больше" ИБ "Курсы"
+define('IBLOCK_SECTION_CODE_EARN_EVEN_MORE', 'earn-even-more'); // Символьный код раздела "Заработать еще больше" ИБ "Курсы"
+define('IBLOCK_SECTION_CODE_CAREER', 'career'); // Символьный код раздела "Мы заботимся о вас" ИБ "Курсы"
+define('IBLOCK_SECTION_CODE_WE_CARE', 'we-care-about-you'); // Символьный код раздела "Карьера" ИБ "Курсы"
+
+define('HL_TABLE_NOTIFICAION', 'user_notifications'); // Название HL таблицы Уведомлений пользователя

@@ -110,6 +110,11 @@ class HighloadBlock extends Base
         return $this->entityDataClass::getList($params)->fetchAll() ?? [];
     }
 
+    public function getCountRow(array $filter): int
+    {
+        return $this->entityDataClass::getCount($filter);
+    }
+
     /**
      * Получение записи HL блока
      * @param array $params

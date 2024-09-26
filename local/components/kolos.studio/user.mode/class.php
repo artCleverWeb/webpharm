@@ -27,6 +27,14 @@ class UserMode extends \CBitrixComponent implements Controllerable
                     new ActionFilter\Csrf(),
                 ],
             ],
+			'saveState' => [
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        [ActionFilter\HttpMethod::METHOD_POST]
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+            ],
         ];
     }
 

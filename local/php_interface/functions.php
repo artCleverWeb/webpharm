@@ -538,15 +538,30 @@ if (!function_exists('phone_mask')) {
     }
 }
 
-function getUserExperienced(){
-    if(is_authorized() === true){
-        if(isset($_SESSION[VAR_SESSION_USER_EXPERIENCED])){
+function getUserExperienced()
+{
+    if (is_authorized() === true) {
+        if (isset($_SESSION[VAR_SESSION_USER_EXPERIENCED])) {
             return $_SESSION[VAR_SESSION_USER_EXPERIENCED];
-        }
-        else{
+        } else {
             return \Kolos\Studio\Helpers\Users::getExperienced(user_id());
         }
     }
 
     return false;
+}
+
+function getUserShortInfo(): array
+{
+    if (is_authorized() === true) {
+        return [
+            'name' => user()->GetLastName() . ' ' . user()->GetFirstName(),
+            'pict' => strlen(user()->GetParam('PERSONAL_PHOTO')) > 0 ? CFile::ResizeImageGet(
+                user()->GetParam('PERSONAL_PHOTO'),
+                ['width' => 128, 'height' => 128]
+            )['src'] : '/assets/upload/images/1-1.png',
+        ];
+    }
+
+    return [];
 }

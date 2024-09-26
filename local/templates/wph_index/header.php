@@ -55,7 +55,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     <div class="navbar__grid-item navbar__grid-item_3">
                         <div class="notices notices_navbar navbar__notices">
                             <div class="notices__icon">
-                                <svg class="icon notices__icon-canvas"><use xlink:href="images/icons/icons.svg#icon-bell"></use></svg>
+                                <svg class="icon notices__icon-canvas"><use xlink:href="/assets/images/icons/icons.svg#icon-bell"></use></svg>
                                 <div class="notices__indicator"></div>
                             </div>
                         </div>
@@ -106,3 +106,6 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </div>
     </div>
     <div class="cnt page__cnt">
+        <div class="grid grid_layout">
+            <div class="grid__item grid__item_1">
+                <div class="content">

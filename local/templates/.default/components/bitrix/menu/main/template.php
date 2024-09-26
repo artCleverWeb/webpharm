@@ -25,7 +25,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     if (!is_null($item['PARAMS']['icon'])): ?>
                         <div class="menu-main__item-link-icon">
                             <svg class="icon menu-main__item-link-icon-canvas">
-                                <use xlink:href="images/icons/icons.svg#icon-study"></use>
+                                <use xlink:href="/assets/images/icons/icons.svg#<?=$item['PARAMS']['icon']?>"></use>
                             </svg>
                         </div>
                     <?php
