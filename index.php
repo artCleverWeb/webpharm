@@ -1,4 +1,5 @@
 <?php
+define('NEED_AUTH', 'Y');
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
 $APPLICATION->SetTitle('Главная');
 ?>
@@ -29,8 +30,6 @@ $APPLICATION->SetTitle('Главная');
             ],
             'BLOCK_TITLE' => 'Как начать работать',
             'LINK_MORE' => '/courses/' . IBLOCK_SECTION_CODE_START_WORK . "/",
-            'BG_COLOR' => '',
-            'ICON_NAME' => 'icon-study',
         ]
     );
     ?>
@@ -54,8 +53,6 @@ $APPLICATION->IncludeComponent(
         ],
         'BLOCK_TITLE' => 'Карьера',
         'LINK_MORE' => '/courses/' . IBLOCK_SECTION_CODE_CAREER . "/",
-        'BG_COLOR' => 'post-mini_bg-1',
-        'ICON_NAME' => 'icon-study',
     ]
 );
 ?>
@@ -78,8 +75,6 @@ $APPLICATION->IncludeComponent(
         ],
         'BLOCK_TITLE' => 'Мы заботимся о вас',
         'LINK_MORE' => '/courses/' . IBLOCK_SECTION_CODE_WE_CARE . "/",
-        'BG_COLOR' => 'post-mini_bg-4',
-        'ICON_NAME' => 'icon-smile',
     ]
 );
 ?>
@@ -102,8 +97,6 @@ $APPLICATION->IncludeComponent(
         ],
         'BLOCK_TITLE' => 'Заработать больше',
         'LINK_MORE' => '/courses/' . IBLOCK_SECTION_CODE_EARN_MORE . "/",
-        'BG_COLOR' => 'post-mini_bg-2',
-        'ICON_NAME' => 'icon-ruble',
     ]
 );
 ?>
@@ -126,8 +119,6 @@ $APPLICATION->IncludeComponent(
         ],
         'BLOCK_TITLE' => 'Заработать ещё больше',
         'LINK_MORE' => '/courses/' . IBLOCK_SECTION_CODE_EARN_EVEN_MORE . "/",
-        'BG_COLOR' => 'post-mini_bg-3',
-        'ICON_NAME' => 'icon-ruble-x',
     ]
 );
 ?>

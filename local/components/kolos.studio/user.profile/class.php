@@ -37,14 +37,25 @@ class UserProfile extends \CBitrixComponent implements Controllerable
 
     public function getNoticeStatusAction()
     {
-        if (is_authorized() === true) {
-            return AjaxJson::createSuccess(
-                [
-                    'status' => Notification::getCountUnread(user_id()) > 0,
-                ]
-            );
-        } else {
-            return AjaxJson::createError([]);
+        try {
+            if (is_authorized() === true) {
+                return AjaxJson::createSuccess(
+                    [
+                        'status' => Notification::getCountUnread(user_id()) > 0,
+                    ]
+                );
+            } else {
+                return AjaxJson::createSuccess(
+                    [
+                        'status' => 0,
+                    ]
+                );
+            }
+        } catch (\Exception $e) {
+            $result = new Result();
+            $result->addError(new Error($e->getMessage(), $e->getCode()));
+
+            return AjaxJson::createError($result->getErrorCollection());
         }
     }
 

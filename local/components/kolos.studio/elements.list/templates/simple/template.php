@@ -9,35 +9,26 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 /** @global CMain $APPLICATION */
 \Bitrix\Main\UI\Extension::load('ui.vue3');
 ?>
-<div id="app-elements_list_<?= $arResult['BLOCK_ID'] ?>" class="section section_margin-1 posts js-posts">
-    <div class="section__header posts__header" v-if="list.length > 0">
-        <div class="section__grid section__grid_1">
-            <div class="section__grid-item section__grid-item_1">
-                <h2 class="title section__title posts__title">
-                    <?=$arParams['BLOCK_TITLE']?>
-                </h2>
-            </div>
-            <div class="section__grid-item section__grid-item_2">
-                <a href="<?=$arParams['LINK_MORE']?>"
-                   class="link link_type-1 link_color-1 section__button section__button_more posts__button">
-                    Смотреть все
-                </a>
-            </div>
-        </div>
-    </div>
+<div class="section__part section__part_promo" id="app-elements_list_<?= $arResult['BLOCK_ID'] ?>">
     <div class="section__swiper-outer swiper-outer posts__swiper-outer" v-if="list.length > 0">
         <div class="section__swiper swiper posts__swiper">
             <div class="section__grid section__grid_2 swiper-wrapper posts__swiper-wrapper">
                 <div class="section__grid-item swiper-slide" v-for="item in list">
-                    <a :href="item.DETAIL_PAGE_URL" class="post-mini" :class="item.section.FIRST.UF_BACKGROUND ?? ''">
+                    <a :href="item.DETAIL_PAGE_URL"
+                       class="post-mini post-mini_type-1" :class="item.section.FIRST.UF_BACKGROUND ?? ''">
                         <div class="post-mini__head">
                             <div class="post-mini__icon">
                                 <svg class="icon post-mini__icon-canvas">
                                     <use v-bind="{'xlink:href':'/assets/images/icons/icons.svg#'+ item.section.FIRST.UF_PICT ?? ''}"></use>
                                 </svg>
                             </div>
+                            <div class="post-mini__time"
+                                 v-html="item.props.DURATION.VALUE ? item.props.DURATION.VALUE + ' мин' : ''">
+                            </div>
                         </div>
                         <div class="post-mini__data">
+                            <div class="post-mini__category" v-html="item.section.CURRENT_SECTION.NAME ?? ''">
+                            </div>
                             <div class="post-mini__title" v-html="item.NAME">
                             </div>
                         </div>
@@ -57,6 +48,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </div>
     </div>
 </div>
+
 
 <script>
     const appElementsList_<?=$arResult['BLOCK_ID']?> = BX.Vue3.BitrixVue.createApp({

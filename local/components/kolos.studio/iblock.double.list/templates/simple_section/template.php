@@ -9,54 +9,51 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 /** @global CMain $APPLICATION */
 \Bitrix\Main\UI\Extension::load('ui.vue3');
 ?>
-<div id="app-elements_list_<?= $arResult['BLOCK_ID'] ?>" class="section section_margin-1 posts js-posts">
-    <div class="section__header posts__header" v-if="list.length > 0">
-        <div class="section__grid section__grid_1">
-            <div class="section__grid-item section__grid-item_1">
-                <h2 class="title section__title posts__title">
-                    <?=$arParams['BLOCK_TITLE']?>
-                </h2>
-            </div>
-            <div class="section__grid-item section__grid-item_2">
-                <a href="<?=$arParams['LINK_MORE']?>"
-                   class="link link_type-1 link_color-1 section__button section__button_more posts__button">
-                    Смотреть все
-                </a>
-            </div>
-        </div>
+<div class="section__part" id="app-elements_list_<?= $arResult['BLOCK_ID'] ?>">
+    <div class="section__header posts__header">
+        <h2 class="title section__title posts__title">
+            Все курсы
+        </h2>
     </div>
-    <div class="section__swiper-outer swiper-outer posts__swiper-outer" v-if="list.length > 0">
-        <div class="section__swiper swiper posts__swiper">
-            <div class="section__grid section__grid_2 swiper-wrapper posts__swiper-wrapper">
-                <div class="section__grid-item swiper-slide" v-for="item in list">
-                    <a :href="item.DETAIL_PAGE_URL" class="post-mini" :class="item.section.FIRST.UF_BACKGROUND ?? ''">
-                        <div class="post-mini__head">
-                            <div class="post-mini__icon">
-                                <svg class="icon post-mini__icon-canvas">
-                                    <use v-bind="{'xlink:href':'/assets/images/icons/icons.svg#'+ item.section.FIRST.UF_PICT ?? ''}"></use>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="post-mini__data">
-                            <div class="post-mini__title" v-html="item.NAME">
-                            </div>
-                        </div>
-                    </a>
+    <div class="section__grid section__grid_3">
+        <div class="section__grid-item" v-for="section in sections" :class="section.UF_BACKGROUND ?? ''">
+            <a :href="section.SECTION_PAGE_URL" class="post-mini-b post-mini-b_category">
+                <div class="post-mini-b__picture">
+                    <svg class="icon post-mini-b__picture-icon"><use xlink:href="/assets/images/icons/icons.svg#icon-folder"></use></svg>
                 </div>
-            </div>
+                <div class="post-mini-b__data">
+                    <div class="post-mini-b__title" v-html="section.NAME">
+                    </div>
+                </div>
+                <button class="post-mini-b__button-arrow">
+                    <svg class="icon post-mini-b__button-arrow-icon"><use xlink:href="/assets/images/icons/icons.svg#icon-arrow-1"></use></svg>
+                </button>
+            </a>
         </div>
-        <div class="swiper-button swiper-button-prev swiper-button-lock">
-            <svg class="icon swiper-button-icon">
-                <use xlink:href="/assets/images/icons/icons.svg#icon-arrow-1"></use>
-            </svg>
-        </div>
-        <div class="swiper-button swiper-button-next swiper-button-lock">
-            <svg class="icon swiper-button-icon">
-                <use xlink:href="/assets/images/icons/icons.svg#icon-arrow-1"></use>
-            </svg>
+        <div class="section__grid-item" v-for="item in list">
+            <a :href="item.DETAIL_PAGE_URL" class="post-mini-b" :class="item.section.FIRST.UF_BACKGROUND ?? ''">
+                <div class="post-mini-b__data">
+                    <div class="post-mini-b__title" v-html="item.NAME">
+                    </div>
+                    <div class="post-mini-b__type" v-html="item.PREVIEW_TEXT">
+                    </div>
+                    <div class="post-mini-a__info">
+                        <div class="post-mini-a__info-item post-mini-a__info-item_category"
+                             v-html="item.section.CURRENT_SECTION.NAME ?? ''">
+                        </div>
+                        <div class="post-mini-a__info-item post-mini-a__info-item_time"
+                             v-html="item.props.DURATION.VALUE ? item.props.DURATION.VALUE + ' мин' : ''">
+                        </div>
+                    </div>
+                </div>
+                <button class="post-mini-b__button-arrow">
+                    <svg class="icon post-mini-b__button-arrow-icon"><use xlink:href="/assets/images/icons/icons.svg#icon-arrow-1"></use></svg>
+                </button>
+            </a>
         </div>
     </div>
 </div>
+
 
 <script>
     const appElementsList_<?=$arResult['BLOCK_ID']?> = BX.Vue3.BitrixVue.createApp({
@@ -65,6 +62,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 componentName: '<?= $this->getComponent()->getName() ?>',
                 arParams: <?= CUtil::PhpToJSObject($arParams)?>,
                 list: {},
+                sections: {},
             }
         },
         computed: {
@@ -84,6 +82,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     .then(function (response) {
                         if (response.status === 'success') {
                             _this.list = response.data.list || {}
+                            _this.sections = response.data.sections || {}
                         }
                     }, function (error) {
                         console.log(error)

@@ -1,4 +1,5 @@
 <?php
+
 /** @global $APPLICATION */
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
@@ -8,8 +9,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 <!DOCTYPE HTML>
 <html lang="ru">
 <head>
-    <?php $APPLICATION->ShowHead(); ?>
-    <title><?php $APPLICATION->ShowTitle(); ?></title>
+    <?php
+    $APPLICATION->ShowHead(); ?>
+    <title><?php
+        $APPLICATION->ShowTitle(); ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=2">
 
@@ -27,12 +30,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     <script defer src="/assets/js/runtime.bundle.js"></script>
     <script defer src="/assets/js/vendors.bundle.js"></script>
     <script defer src="/assets/js/main.bundle.js"></script>
-    <link href="/assets/css/main.css" rel="stylesheet"></head>
+    <link href="/assets/css/main.css" rel="stylesheet">
+</head>
 
 </head>
 <body>
 <div id="panel">
-    <?php $APPLICATION->ShowPanel(); ?>
+    <?php
+    $APPLICATION->ShowPanel(); ?>
 </div>
 <div class="page">
     <div class="navbar js-navbar">
@@ -55,7 +60,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     <div class="navbar__grid-item navbar__grid-item_3">
                         <div class="notices notices_navbar navbar__notices">
                             <div class="notices__icon">
-                                <svg class="icon notices__icon-canvas"><use xlink:href="/assets/images/icons/icons.svg#icon-bell"></use></svg>
+                                <svg class="icon notices__icon-canvas">
+                                    <use xlink:href="/assets/images/icons/icons.svg#icon-bell"></use>
+                                </svg>
                                 <div class="notices__indicator"></div>
                             </div>
                         </div>
@@ -65,18 +72,22 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </div>
         <div class="navbar__data">
             <a href="/" class="logo-main navbar__logo">
-                <img src="/assets/images/logo.png" alt="WebPharm.ru" title="WebPharm.ru" class="logo-main__img" />
+                <img src="/assets/images/logo.png" alt="WebPharm.ru" title="WebPharm.ru" class="logo-main__img"/>
             </a>
-            <a href="#" class="user-mini user-mini_navbar navbar__user">
-                <div class="user-mini__picture">
-                    <img src="/assets/upload/images/1-1.png" alt="" class="user-mini__picture-img">
-                </div>
-                <div class="user-mini__data">
-                    <div class="user-mini__name">
-                        Михаил
+            <?php
+            if (count(($userInfo = getUserShortInfo())) > 0): ?>
+                <a href="#" class="user-mini user-mini_navbar navbar__user">
+                    <div class="user-mini__picture">
+                        <img src="<?= $userInfo['pict'] ?>" alt="" class="user-mini__picture-img">
                     </div>
-                </div>
-            </a>
+                    <div class="user-mini__data">
+                        <div class="user-mini__name">
+                            <?= $userInfo['name'] ?>
+                        </div>
+                    </div>
+                </a>
+            <?php
+            endif ?>
             <?php
             $APPLICATION->IncludeComponent(
                 "bitrix:menu",
@@ -86,7 +97,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     "CHILD_MENU_TYPE" => "left",
                     "DELAY" => "N",
                     "MAX_LEVEL" => "1",
-                    "MENU_CACHE_GET_VARS" =>[""],
+                    "MENU_CACHE_GET_VARS" => [""],
                     "MENU_CACHE_TIME" => "3600",
                     "MENU_CACHE_TYPE" => "A",
                     "MENU_CACHE_USE_GROUPS" => "Y",
@@ -94,7 +105,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     "USE_EXT" => "N",
                     "EXTENDED_MODE" => getUserExperienced(),
                 ]
-            );?>
+            ); ?>
 
             <?php
             $APPLICATION->IncludeComponent(
@@ -102,10 +113,49 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 "",
                 [
                 ]
-            );?>
+            ); ?>
         </div>
     </div>
     <div class="cnt page__cnt">
         <div class="grid grid_layout">
             <div class="grid__item grid__item_1">
                 <div class="content">
+                    <?php
+                    if ($APPLICATION->GetCurPage(false) !== '/'): ?>
+                        <div class="header content__header">
+                            <div class="header__grid header__grid_1">
+                                <div class="header__grid-item header__grid-item_1">
+                                    <div class="headline">
+                                        <h1 class="title headline__title">
+                                            <?= $APPLICATION->ShowTitle(false); ?>
+                                        </h1>
+                                    </div>
+                                    <?php
+                                    $APPLICATION->IncludeComponent(
+                                        "bitrix:breadcrumb",
+                                        ".default",
+                                        array(
+                                            "PATH" => "",
+                                            "SITE_ID" => "s1",
+                                            "START_FROM" => "0",
+                                        ),
+                                        false
+                                    ); ?>
+                                </div>
+                                <div class="header__grid-item header__grid-item_2">
+                                    <div class="search-mini">
+                                        <form action="#" class="search-mini__form">
+                                            <input type="text" class="search-mini__input-text"
+                                                   placeholder="Искать курс"/>
+                                            <button type="submit" class="search-mini__button-submit">
+                                                <svg class="icon search-mini__button-submit-icon">
+                                                    <use xlink:href="images/icons/icons.svg#icon-search"></use>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    endif; ?>

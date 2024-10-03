@@ -1,9 +1,7 @@
 <?
-$sSectionName = 'Главная';
-$arDirProperties = array(
-	'title' => 'WEBPHARM | Центр дистанционного обучения',
-	'description' => '',
-	'keywords' => '',
-	'robots' => 'index, follow'
+$sSectionName = "Центр обучения Эркафарм";
+$arDirProperties = Array(
+   "TITLE" => "WEBPHARM | Центр дистанционного обучения",
+   "ROBOTS" => "index, follow"
 );
 ?>

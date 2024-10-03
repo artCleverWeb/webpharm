@@ -27,7 +27,7 @@ class UserMode extends \CBitrixComponent implements Controllerable
                     new ActionFilter\Csrf(),
                 ],
             ],
-			'saveState' => [
+            'saveState' => [
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
                         [ActionFilter\HttpMethod::METHOD_POST]
@@ -40,26 +40,42 @@ class UserMode extends \CBitrixComponent implements Controllerable
 
     public function saveStateAction($fields)
     {
-        if(is_authorized()) {
+        try {
+            if (is_authorized()) {
+                return AjaxJson::createSuccess(
+                    [
+                        'status' => \Kolos\Studio\Helpers\Users::setExperienced(user_id(), $fields['state'] == 1),
+                    ]
+                );
+            } else {
+                return AjaxJson::createSuccess(
+                    [
+                        'status' => false,
+                    ]
+                );
+            }
+        } catch (\Exception $e) {
+            $result = new Result();
+            $result->addError(new Error($e->getMessage(), $e->getCode()));
 
-            return AjaxJson::createSuccess(
-                [
-                    'status' => \Kolos\Studio\Helpers\Users::setExperienced(user_id(), $fields['state'] == 1),
-                ]
-            );
-        }
-        else{
-            return AjaxJson::createError([]);
+            return AjaxJson::createError($result->getErrorCollection());
         }
     }
 
     public function getStateAction()
     {
-        return AjaxJson::createSuccess(
-            [
-                'is_experienced' => getUserExperienced() ? 1 : 0,
-            ]
-        );
+        try {
+            return AjaxJson::createSuccess(
+                [
+                    'is_experienced' => getUserExperienced() ? 1 : 0,
+                ]
+            );
+        } catch (\Exception $e) {
+            $result = new Result();
+            $result->addError(new Error($e->getMessage(), $e->getCode()));
+
+            return AjaxJson::createError($result->getErrorCollection());
+        }
     }
 
     protected function getResult()

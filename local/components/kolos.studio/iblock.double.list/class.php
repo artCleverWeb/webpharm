@@ -9,7 +9,7 @@ use Bitrix\Main\Engine\Contract\Controllerable;
 use Bitrix\Main\Engine\Response\AjaxJson;
 use Bitrix\Main\Engine\ActionFilter;
 
-class ElementsList extends \CBitrixComponent implements Controllerable
+class IblockDouuble extends \CBitrixComponent implements Controllerable
 {
     public function configureActions()
     {
@@ -36,8 +36,8 @@ class ElementsList extends \CBitrixComponent implements Controllerable
                 "DETAIL_PAGE_URL",
                 "IBLOCK_ID",
                 "PREVIEW_TEXT",
-                ];
-            
+            ];
+
             $arFilter = [
                 "IBLOCK_ID" => IntVal($arParams['IBLOCK_ID']),
                 "ACTIVE_DATE" => "Y",
@@ -49,20 +49,24 @@ class ElementsList extends \CBitrixComponent implements Controllerable
                 $arFilter['SECTION_CODE'] = $arParams['SECTION_CODE'];
             }
 
-            if (is_array($arParams['FILTER'])) {
-                $arFilter = array_merge($arParams['FILTER'], $arFilter);
+            if (!is_null($arParams['SECTION_ID'])) {
+                $arFilter['SECTION_ID'] = $arParams['SECTION_ID'];
+            }
+
+            if (is_array($arParams['ELEMENT_FILTER'])) {
+                $arFilter = array_merge($arParams['ELEMENT_FILTER'], $arFilter);
             }
 
             $arSort = [
-                $arParams['SORT_1'] ?? 'SORT' => $arParams['ORDER_1'] ?? 'desc',
-                $arParams['SORT_2'] ?? 'ID' => $arParams['ORDER_2'] ?? 'asc',
+                $arParams['ELEMENT_SORT_1'] ?? 'SORT' => $arParams['ELEMENT_ORDER_1'] ?? 'desc',
+                $arParams['ELEMENT_SORT_2'] ?? 'ID' => $arParams['ELEMENT_ORDER_2'] ?? 'asc',
             ];
 
             $res = CIBlockElement::GetList(
                 $arSort,
                 $arFilter,
                 false,
-                ["nPageSize" => $arParams['COUNT'] ?? 10],
+                ["nPageSize" => $arParams['ELEMENT_COUNT'] ?? 10],
                 $arSelect
             );
 
@@ -76,9 +80,57 @@ class ElementsList extends \CBitrixComponent implements Controllerable
                 $list[] = $item;
             }
 
+            $sections = [];
+
+            $arSortSection = [
+                $arParams['SECTION_SORT_1'] ?? 'SORT' => $arParams['SECTION_ORDER_1'] ?? 'desc',
+                $arParams['SECTION_SORT_2'] ?? 'ID' => $arParams['SECTION_ORDER_2'] ?? 'asc',
+            ];
+
+            $arSelectSection = [
+                "ID",
+                "NAME",
+                "SECTION_PAGE_URL",
+                "IBLOCK_ID",
+                "DESCRIPTION",
+                "PICTURE",
+                "UF_*",
+            ];
+
+            $arFilterSection = [
+                "IBLOCK_ID" => IntVal($arParams['IBLOCK_ID']),
+                "ACTIVE_DATE" => "Y",
+                "ACTIVE" => "Y",
+            ];
+
+            if (!is_null($arParams['SECTION_CODE'])) {
+                $arFilterSection['SECTION_CODE'] = $arParams['SECTION_CODE'];
+            }
+
+            if (!is_null($arParams['SECTION_ID'])) {
+                $arFilterSection['SECTION_ID'] = $arParams['SECTION_ID'];
+            }
+
+            if (is_array($arParams['SECTION_FILTER'])) {
+                $arFilterSection = array_merge($arParams['SECTION_FILTER'], $arFilter);
+            }
+
+            $sectionsRes = \CIBlockSection::GetList(
+                $arSortSection,
+                $arFilterSection,
+                false,
+                $arSelectSection,
+                ["nPageSize" => $arParams['SECTION_COUNT'] ?? 10],
+            );
+
+            while ($ob = $sectionsRes->GetNext()) {
+                $sections[] = $ob;
+            }
+
             return AjaxJson::createSuccess(
                 [
                     'list' => $list,
+                    'sections' => $sections,
                 ]
             );
         } catch (\Exception $e) {
