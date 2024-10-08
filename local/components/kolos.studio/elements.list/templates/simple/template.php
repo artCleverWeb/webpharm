@@ -82,7 +82,6 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     })
             },
             send(method, fields, asFormData) {
-                console.log(asFormData);
                 const _this = this
 
                 let params = {

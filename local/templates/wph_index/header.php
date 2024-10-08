@@ -58,14 +58,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                         </div>
                     </div>
                     <div class="navbar__grid-item navbar__grid-item_3">
-                        <div class="notices notices_navbar navbar__notices">
-                            <div class="notices__icon">
-                                <svg class="icon notices__icon-canvas">
-                                    <use xlink:href="/assets/images/icons/icons.svg#icon-bell"></use>
-                                </svg>
-                                <div class="notices__indicator"></div>
-                            </div>
-                        </div>
+                        <?php
+                        $APPLICATION->IncludeComponent(
+                            "kolos.studio:user.notice",
+                            "",
+                            [
+                            ]
+                        ); ?>
                     </div>
                 </div>
             </div>

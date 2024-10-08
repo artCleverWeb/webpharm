@@ -24,12 +24,61 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     <?= $arResult['name'] ?>
                 </a>
             </div>
+            <div class="dropdown user-mini__dropdown">
+                <div class="user-mini__menu">
+                    <div class="user-mini__menu-list">
+                        <div class="user-mini__menu-item">
+                            <a href="/personal/" class="user-mini__menu-item-link">
+                                Личный кабинет
+                            </a>
+                        </div>
+                        <div class="user-mini__menu-item">
+                            <a href="/pages/user_agreements.html" class="user-mini__menu-item-link">
+                                Пользовательское соглашение
+                            </a>
+                        </div>
+                        <div class="user-mini__menu-item">
+                            <a href="/pages/conf_policies.html" class="user-mini__menu-item-link">
+                                Политика конфиденциальности
+                            </a>
+                        </div>
+                        <div class="user-mini__menu-item user-mini__menu-item_logout">
+                            <a href="/?logout=yes" class="user-mini__menu-item-link">
+                                Выйти
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notices notices_sidebar sidebar__notices">
             <div class="notices user-mini__notices">
                 <div class="notices__icon">
                     <svg class="icon notices__icon-canvas">
                         <use xlink:href="/assets/images/icons/icons.svg#icon-bell"></use>
                     </svg>
-                    <div class="notices__indicator"></div>
+                    <div class="notices__indicator" v-if="stateNotification"></div>
+                </div>
+                <div class="dropdown notices__dropdown" v-if="list.length > 0">
+                    <div class="notices__head">
+                        Требует прохождения
+                    </div>
+                    <div class="notices__list" v-for="item in list">
+                        <a :href="item.link" class="notices__item" :class="item.isRead == '0' ? 'is-read' : ''"
+                           v-if="item.link" :data-id="item.noticeId">
+                            <div class="notices__item-title" v-html="item.fullText">
+                            </div>
+                            <div class="notices__item-date" v-html="item.descr">
+                            </div>
+                        </a>
+                        <span class="notices__item" :class="item.isRead == '0' ? 'is-read' : ''" v-else
+                              :data-id="item.noticeId">
+                            <div class="notices__item-title" v-html="item.fullText">
+                            </div>
+                            <div class="notices__item-date" v-html="item.descr">
+                            </div>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -182,22 +231,24 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             return {
                 componentName: '<?= $this->getComponent()->getName() ?>',
                 userInfo: <?= CUtil::PhpToJSObject($arResult['USER_INFO'])?>,
+                list: {},
                 stateNotification: false,
             }
         },
         computed: {},
         watch: {},
         mounted() {
-            this.getStateNotification()
+            this.getNoticeList()
         },
         methods: {
-            getStateNotification() {
+            getNoticeList() {
                 const _this = this
 
-                _this.send('getNoticeStatus')
+                _this.send('getNoticeList')
                     .then(function (response) {
                         if (response.status === 'success') {
-                            _this.stateNotification = response.data.status == 'true'
+                            _this.stateNotification = response.data.status == true
+                            _this.list = response.data.list || {}
                         }
                     }, function (error) {
                         console.log(error)

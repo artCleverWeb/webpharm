@@ -11,7 +11,7 @@ use Bitrix\Main\Engine\Response\AjaxJson;
 use Bitrix\Main\Engine\ActionFilter;
 use Kolos\Studio\Helpers\Notification;
 
-class UserProfile extends \CBitrixComponent implements Controllerable
+class UserNotice extends \CBitrixComponent implements Controllerable
 {
     public function configureActions()
     {
@@ -27,7 +27,7 @@ class UserProfile extends \CBitrixComponent implements Controllerable
         ];
     }
 
-    public function getNoticeListAction()
+    public function getNoticeListAction(array $params = [])
     {
         try {
             if (is_authorized() === true) {
@@ -55,9 +55,7 @@ class UserProfile extends \CBitrixComponent implements Controllerable
 
     protected function getResult()
     {
-        return [
-            'USER_INFO' => getUserShortInfo() ?? [],
-        ];
+        return [];
     }
 
     public function executeComponent()
