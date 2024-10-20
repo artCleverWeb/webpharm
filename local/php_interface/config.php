@@ -13,3 +13,4 @@ define('IBLOCK_SECTION_CODE_WE_CARE', 'we-care-about-you'); // Символьн�
 
 define('HL_TABLE_NOTIFICAION', 'user_notifications'); // Название HL таблицы Уведомлений пользователя
 define('HL_TABLE_USERS', 'employee_personnel_numbers'); // Название HL таблицы Табельные номера сотрудников
+define('HL_TABLE_PHARMACY_CHAIN', 'num_pharmacy_chain'); // Название HL таблицы Табельные номера: Аптечная сеть

@@ -2,6 +2,7 @@
 
 namespace Kolos\Studio\Import;
 
+use Bitrix\Iblock\ElementTable;
 use Bitrix\Iblock\SectionTable;
 use Bitrix\Main\Loader;
 use Kolos\Studio\Helpers\HighloadBlock;
@@ -15,7 +16,9 @@ class User
 
     private array $data = [];
     private array $regions = [];
-
+    private array $arPharmacy = [];
+    private array $pharmacyChain = [];
+    
     private array $error = [];
 
     function __construct(string $file, string $tableName)
@@ -31,6 +34,10 @@ class User
         if ($this->checkSettings() === true) {
             if ($this->readFile() !== false && count($this->data) > 0) {
                 $this->copyFile();
+                
+                $this->getPharmacy();
+                $this->getRegions();
+                $this->getPharmacyChain();
             }
         }
     }
@@ -86,12 +93,63 @@ class User
             $code = mb_strtolower(trim($region['XML_ID']), 'UTF-8');
             $this->regions[$code] = $region['ID'];
         }
+
+        unset($regions);
+    }
+
+    private function getPharmacy(): void
+    {
+        $items = ElementTable::getList([
+            'filter' => [
+                'IBLOCK_ID' => IBLOCK_ID_NUM_CITIES,
+                '!XML_ID' => false
+            ],
+            'select' => [
+                'ID',
+                'IBLOCK_ID',
+                'NAME',
+                'XML_ID',
+            ],
+        ])->fetchAll();
+
+        foreach ($items as $item){
+            $code = mb_strtolower(trim($item['XML_ID']), 'UTF-8');
+            $this->arPharmacy[$code] = $item['ID'];
+        }
+
+        unset($items);
+    }
+    
+    private function getPharmacyChain(): void
+    {
+        $pharmacyChainEntity = new HighloadBlock(HL_TABLE_PHARMACY_CHAIN);
+        $items = $pharmacyChainEntity->find([
+            'filter' => [
+                '!UF_XML_ID' => false,
+            ],
+            'select' => [
+                'ID',
+                'UF_XML_ID',
+            ],
+        ]);
+
+        foreach ($items as $item){
+            $code = mb_strtolower(trim($item['XML_ID']), 'UTF-8');
+            $this->pharmacyChain[$code] = $item['ID'];
+        }
+
+        unset($items);
     }
 
     private function checkSettings(): bool
     {
         if (!defined('IBLOCK_ID_NUM_CITIES') || IBLOCK_ID_NUM_CITIES < 1) {
             $this->error[] = 'Не задана константа с ID ИБ Городов';
+            return false;
+        }
+
+        if(!defined('HL_TABLE_PHARMACY_CHAIN') || strlen(HL_TABLE_PHARMACY_CHAIN) < 0){
+            $this->error[] = 'Не задана константа с ID HL Табельные номера: Аптечная сеть';
             return false;
         }
 
