@@ -12,3 +12,4 @@ define('IBLOCK_SECTION_CODE_CAREER', 'career'); // Символьный код �
 define('IBLOCK_SECTION_CODE_WE_CARE', 'we-care-about-you'); // Символьный код раздела "Карьера" ИБ "Курсы"
 
 define('HL_TABLE_NOTIFICAION', 'user_notifications'); // Название HL таблицы Уведомлений пользователя
+define('HL_TABLE_USERS', 'employee_personnel_numbers'); // Название HL таблицы Табельные номера сотрудников
