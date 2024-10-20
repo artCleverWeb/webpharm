@@ -3,7 +3,7 @@
 define('VAR_SESSION_USER_EXPERIENCED', 'USER_EXTENDED'); // Название переменной в сессии, которая хранит значение Опытный пользователь
 
 define('IBLOCK_ID_COURSES', 2); // ID ИБ "Курсы"
-
+define('IBLOCK_ID_NUM_CITIES', 3); // ID ИБ "Табельные номера: Города"
 
 define('IBLOCK_SECTION_CODE_START_WORK', 'start-working'); // Символьный код раздела "Начать работать" ИБ "Курсы"
 define('IBLOCK_SECTION_CODE_EARN_MORE', 'earn-more'); // Символьный код раздела "Заработать больше" ИБ "Курсы"
