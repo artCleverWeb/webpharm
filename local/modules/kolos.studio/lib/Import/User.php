@@ -5,12 +5,13 @@ namespace Kolos\Studio\Import;
 use Bitrix\Iblock\ElementTable;
 use Bitrix\Iblock\SectionTable;
 use Bitrix\Main\Loader;
+use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\UserTable;
 use Kolos\Studio\Helpers\HighloadBlock;
 
 class User
 {
-    private string $fileName = '';
+    private string $file = '';
 
     private string $HL_TABLE_NAME = '';
     private HighloadBlock $storeEntity;
@@ -26,13 +27,14 @@ class User
 
     function __construct(string $file, string $tableName)
     {
+        $this->file = $_SERVER['DOCUMENT_ROOT'] . $file;
         $this->HL_TABLE_NAME = $tableName;
         $this->storeEntity = new HighloadBlock($tableName);
 
         Loader::includeModule('iblock');
     }
 
-    public function export(): void
+    public function import(): void
     {
         $this->process();
         $this->processUser();
@@ -54,6 +56,7 @@ class User
                 $this->getPharmacyChain();
                 $this->getUsers();
                 $this->getEmployee();
+                $this->store();
             }
         }
     }
@@ -108,7 +111,7 @@ class User
                         $arItem[1]
                     )
                 ),
-                'UF_XML_ID' => $sTabNumTmp,
+                'UF_XML_ID' => strtoupper($sTabNumTmp),
                 'UF_PAHRM_NUMBER' => $apt_number,
                 'UF_PHARM_ADDRESS' => trim($arItem[3]),
                 'UF_APTECKA_OBJ' => $pharmacy_id,
@@ -169,23 +172,24 @@ class User
             ) {
                 $arSaveData["UF_SORT"] = 450;
             }
+            $this->storeEmployee($arSaveData);
         }
     }
 
     private function storeEmployee(array $arSave): void
     {
-        if (!$this->employee[$arSave['UF_CODE']]) {
+        if (!$this->employee[$arSave['UF_XML_ID']]) {
             $id = $this->addEmployee($arSave);
 
             if ($id > 0) {
-                $this->employee[$arSave['UF_CODE']] = $id;
+                $this->employee[$arSave['UF_XML_ID']] = $id;
             }
         } else {
-            $this->storeEntity->update($this->employee[$arSave['UF_CODE']], $arSave);
+            $this->storeEntity->update($this->employee[$arSave['UF_XML_ID']], $arSave);
         }
     }
 
-    private function getEmployee(bool $isFull): void
+    private function getEmployee(bool $isFull = false): void
     {
         $select = $isFull ? [
             'ID',
@@ -203,7 +207,7 @@ class User
         ]);
 
         foreach ($items as $item) {
-            $code = mb_strtolower(trim($item['XML_ID']), 'UTF-8');
+            $code = mb_strtoupper(trim($item['UF_XML_ID']), 'UTF-8');
             $this->employee[$code] = $isFull ? $item : $item['ID'];
         }
 
@@ -251,11 +255,12 @@ class User
                     if (!isset($this->regions[$xml_id])) {
                         $id = $this->addRegion(
                             [
-                                'IBLOCK_SECTION_ID' => ($parent_xml_id && isset($arLocationId[$parent_xml_id]) ? $arLocationId[$parent_xml_id] : ''),
+                                'IBLOCK_SECTION_ID' => ($parent_xml_id && isset($arLocationId[$parent_xml_id]) ? $arLocationId[$parent_xml_id] : 0),
                                 'ACTIVE' => 'Y',
                                 'NAME' => $name,
                                 'XML_ID' => $xml_id,
                                 'IBLOCK_ID' => IBLOCK_ID_NUM_CITIES,
+                                'TIMESTAMP_X' => DateTime::createFromTimestamp(time()),
                             ]
                         );
 
@@ -302,6 +307,8 @@ class User
 
     private function addRegion(array $data): int
     {
+
+        $data['DATE_CREATE'] = DateTime::createFromTimestamp(time());
         $state = SectionTable::add($data);
         if ($state->isSuccess()) {
             return $state->getId();
@@ -457,6 +464,7 @@ class User
 
         if (!file_exists($new_file)) {
             copy($this->file, $new_file);
+          //  unlink($this->file);
         }
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+define('FILE_USER_IMPORT', '/import/user/tab_num.csv'); // Путь к файлу с импортом пользователей
+
 define('GRID__AUTH_USERS', 2); // ID группы пользователей в которую добавляются при регистрации
 
 define('VAR_SESSION_USER_EXPERIENCED', 'USER_EXTENDED'); // Название переменной в сессии, которая хранит значение Опытный пользователь
