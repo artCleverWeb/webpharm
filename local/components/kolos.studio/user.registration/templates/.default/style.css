@@ -1,0 +1,5 @@
+.form-error__item {
+    color: red;
+    padding: 10px 0;
+    font-weight: bold;
+}

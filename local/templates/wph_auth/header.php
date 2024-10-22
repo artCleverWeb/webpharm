@@ -33,4 +33,3 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 <body>
 <div class="page">
     <div class="cnt page__cnt">
-        <div class="grid grid_layout-1">

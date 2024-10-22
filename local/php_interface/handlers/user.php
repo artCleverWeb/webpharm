@@ -16,7 +16,6 @@ function OnBeforeUserLoginHandler(&$arFields)
         // приводим телефон к единому виду
         $arFields["LOGIN"] = CIWebSMS::MakePhoneNumber($arFields["LOGIN"]);
     }
-
 }
 
 
@@ -33,6 +32,7 @@ function MyOnBeforePrologHandler()
     $allowPublicUrl = [
         '/login/',
         '/registration/',
+        '/bitrix/services/main/ajax.php',
     ];
 
     if(!is_authorized()){

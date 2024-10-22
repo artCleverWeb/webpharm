@@ -538,6 +538,13 @@ if (!function_exists('phone_mask')) {
     }
 }
 
+if (!function_exists('phone_int')) {
+    function phone_int($phoneNumber)
+    {
+        return preg_replace('/(\D)+/', '', $phoneNumber);
+    }
+}
+
 function getUserExperienced()
 {
     if (is_authorized() === true) {

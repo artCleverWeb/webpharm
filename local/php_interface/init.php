@@ -16,6 +16,7 @@ require_once __DIR__ . '/userTypeProperty/usertypeyesno.php';
 require_once __DIR__ . '/userTypeProperty/usertypeuser.php';
 
 require_once __DIR__ . '/handlers/user.php';
+require_once __DIR__ . '/handlers/sms.php';
 
 Loader::includeModule('iblock');
 Loader::includeModule('kolos.studio');

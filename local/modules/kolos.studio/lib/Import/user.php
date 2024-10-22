@@ -185,21 +185,26 @@ class User
         }
     }
 
-    private function getEmployee(): void
+    private function getEmployee(bool $isFull): void
     {
+        $select = $isFull ? [
+            'ID',
+            'UF_XML_ID',
+        ] : [
+            '*',
+            'UF_*',
+        ];
+
         $items = $this->storeEntity->find([
             'filter' => [
                 '!UF_XML_ID' => false,
             ],
-            'select' => [
-                'ID',
-                'UF_XML_ID',
-            ],
+            'select' =>  $select,
         ]);
 
         foreach ($items as $item) {
             $code = mb_strtolower(trim($item['XML_ID']), 'UTF-8');
-            $this->employee[$code] = $item['ID'];
+            $this->employee[$code] = $isFull ? $item : $item['ID'];
         }
 
         unset($items);

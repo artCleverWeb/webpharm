@@ -28,6 +28,11 @@ if (htmlspecialchars($_REQUEST["forgotpasswd"]) == "yes") {
     $sMobile = str_replace(['(', ')', '+', '_', '-', ' '], "", $_REQUEST["USER_LOGIN"]);
     $sMobile = CIWebSMS::MakePhoneNumber($sMobile);
 
+    if(beforeSmsSend($sMobile) === false){
+        $arResult["ERRORS"][] = "Исчерпан лимит отправки СМС. Подождите или обратитесь к менеджеру.";
+        $sMobile = '';
+    }
+
     if (strlen(trim($sMobile)) > 0) {
         $arUser = CUser::GetList(
             $sBy = "id",
@@ -52,10 +57,9 @@ if (htmlspecialchars($_REQUEST["forgotpasswd"]) == "yes") {
             if ($arUser["ACTIVE"] == "Y") {
                 $arResult["MESS"][] = "Вам отправлено SMS с паролем.";
 
-                CIWebSMS::Send(
-                    $arUser["LOGIN"],
-                    "Логин: " . $arUser["LOGIN"] . " и пароль: " . $arUser["UF_CREEN_PASS"] . " для " . $_SERVER["HTTP_HOST"]
-                );
+                $message = "Логин: " . $arUser["LOGIN"] . " и пароль: " . $arUser["UF_CREEN_PASS"] . " для " . $_SERVER["HTTP_HOST"];
+                CIWebSMS::Send($arUser["LOGIN"], $message);
+                afterSmsSend($arUser["LOGIN"], $message);
             } else {
                 $arResult["ERRORS"][] = "Пользователь с таким телефоном (логином) заблокирован.<br>" .
                     "Обратитесь к администратору сайта.";

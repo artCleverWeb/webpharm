@@ -1,5 +1,7 @@
 <?php
 
+define('GRID__AUTH_USERS', 2); // ID группы пользователей в которую добавляются при регистрации
+
 define('VAR_SESSION_USER_EXPERIENCED', 'USER_EXTENDED'); // Название переменной в сессии, которая хранит значение Опытный пользователь
 
 define('IBLOCK_ID_COURSES', 2); // ID ИБ "Курсы"
@@ -14,3 +16,4 @@ define('IBLOCK_SECTION_CODE_WE_CARE', 'we-care-about-you'); // Символьн�
 define('HL_TABLE_NOTIFICAION', 'user_notifications'); // Название HL таблицы Уведомлений пользователя
 define('HL_TABLE_USERS', 'employee_personnel_numbers'); // Название HL таблицы Табельные номера сотрудников
 define('HL_TABLE_PHARMACY_CHAIN', 'num_pharmacy_chain'); // Название HL таблицы Табельные номера: Аптечная сеть
+define('HL_TABLE_SMS_LOGS', 'sms_logs'); // Название HL таблицы Логи СМС
