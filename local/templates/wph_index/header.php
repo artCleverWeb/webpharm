@@ -5,7 +5,6 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 ?>
-
 <!DOCTYPE HTML>
 <html lang="ru">
 <head>
@@ -31,6 +30,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     <script defer src="/assets/js/vendors.bundle.js"></script>
     <script defer src="/assets/js/main.bundle.js"></script>
     <link href="/assets/css/main.css" rel="stylesheet">
+    <?php include_file('/include/header/js_controller_urls.php', true); ?>
 </head>
 
 </head>
