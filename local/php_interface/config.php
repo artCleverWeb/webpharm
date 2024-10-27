@@ -8,6 +8,10 @@ define('VAR_SESSION_USER_EXPERIENCED', 'USER_EXTENDED'); // Название п�
 
 define('IBLOCK_ID_COURSES', 2); // ID ИБ "Курсы"
 define('IBLOCK_ID_NUM_CITIES', 3); // ID ИБ "Табельные номера: Города"
+define('IBLOCK_ID_COURSES_TEST', 5); // ID ИБ "Корпоративное обучение: Тесты"
+define('IBLOCK_ID_COURSES_RESULTS', 6); // ID ИБ "Табельные номера: Результаты"
+define('IBLOCK_ID_COURSES_PROCESS', 8); // ID ИБ "Табельные номера: Прохождение"
+
 
 define('IBLOCK_SECTION_CODE_START_WORK', 'start-working'); // Символьный код раздела "Начать работать" ИБ "Курсы"
 define('IBLOCK_SECTION_CODE_EARN_MORE', 'earn-more'); // Символьный код раздела "Заработать больше" ИБ "Курсы"
