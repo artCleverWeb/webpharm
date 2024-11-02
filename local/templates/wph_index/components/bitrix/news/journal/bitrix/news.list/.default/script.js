@@ -11,7 +11,7 @@ function loadAjaxJournal() {
             var windowSize   = BX.GetWindowInnerSize();
             var pos          = BX.pos(journalBody);
             var posBody      = pos.top + BX.height(journalBody);
-            var button       = windowScroll.scrollTop == document.body.scrollHeight - windowSize.innerHeight;
+            var button       = windowScroll.scrollTop >= document.body.scrollHeight - windowSize.innerHeight;
             if (button || windowScroll.scrollTop > windowSize.innerHeight || windowSize.innerHeight > posBody) {
                 BX.showWait();
                 BX.addClass(journalBody, "loading");
