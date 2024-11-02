@@ -16,6 +16,14 @@ $arUrlRewrite=array (
     'PATH' => '/courses/index.php',
     'SORT' => 100,
   ),
+  3 => 
+  array (
+    'CONDITION' => '#^/journal/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/journal/index.php',
+    'SORT' => 100,
+  ),
   1 => 
   array (
     'CONDITION' => '#^/rest/#',

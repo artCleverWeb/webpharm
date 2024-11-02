@@ -148,7 +148,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                                                    placeholder="Искать курс"/>
                                             <button type="submit" class="search-mini__button-submit">
                                                 <svg class="icon search-mini__button-submit-icon">
-                                                    <use xlink:href="images/icons/icons.svg#icon-search"></use>
+                                                    <use xlink:href="/assets/images/icons/icons.svg#icon-search"></use>
                                                 </svg>
                                             </button>
                                         </form>
