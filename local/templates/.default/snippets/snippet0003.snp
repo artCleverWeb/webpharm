@@ -1,0 +1,10 @@
+<h3>Фото/Видео/Презентация в одну колонку:</h3>
+<a href="/assets/upload/video/1-1.mp4" class="picture js-popup-media-open" data-popup-type="video">
+    <picture>
+        <source media="(max-width: 767px)" srcset="/assets/upload/images/mobile/5-1.webp" type="image/webp">
+        <source srcset="/assets/upload/images/webp/5-1.webp, /assets/upload/images/2x/webp/5-1.webp 2x" type="image/webp">
+        <img src="/assets/upload/images/5-1.jpg" srcset="/assets/upload/images/2x/5-1.jpg 2x" alt="" class="picture__img" width="896" height="320">
+    </picture>
+    <span class="picture__overlay"></span>
+    <svg class="icon picture__icon picture__icon_play"><use xlink:href="/assets/images/icons/icons.svg#icon-play"></use></svg>
+</a>
