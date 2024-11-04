@@ -40,7 +40,44 @@ class TestsForm extends \CBitrixComponent implements Controllerable
                     new ActionFilter\Csrf(),
                 ],
             ],
+            'getLastResult' => [
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        [ActionFilter\HttpMethod::METHOD_POST]
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+            ],
         ];
+    }
+
+    public function getLastResultAction(array $fields)
+    {
+        try {
+            if (is_authorized() === true) {
+                if (($testId = intval($fields['testId'])) > 0) {
+                    \Bitrix\Main\Loader::includeModule('kolos.studio');
+                    $testEntity = new Kolos\Studio\Tests\UserResult($testId, user_id());
+                    return AjaxJson::createSuccess($testEntity->getLastResult());
+                } else {
+                    $result = new Result();
+                    $result->addError(new Error("Тест не найден или не активен", 404));
+
+                    return AjaxJson::createError($result->getErrorCollection());
+                }
+            } else {
+                $result = new Result();
+                $result->addError(new Error("Пользователь не авторизован", 403));
+
+                return AjaxJson::createError($result->getErrorCollection());
+            }
+        } catch (\Exception $e) {
+            $result = new Result();
+            $result->addError(new Error($e->getMessage(), $e->getCode()));
+
+            return AjaxJson::createError($result->getErrorCollection());
+        }
+
     }
 
     public function sendResultAction(array $fields)

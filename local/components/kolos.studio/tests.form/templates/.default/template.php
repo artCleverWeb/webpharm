@@ -21,7 +21,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     <div v-show="testNeedResult > 0">
         Для успешного прохождения теста число правильных ответов должно составить не менее <span v-html="testNeedResult"></span>%
     </div>
-
+    <div v-show="lastResult.result != undefined">
+        Результат прошлого теста: <span v-html="lastResult.result"></span>%
+    </div>
 </div>
 
 <script>
@@ -38,12 +40,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 btnText: "Следующий вопрос",
                 showBtn: false,
                 answerId: 0,
+                lastResult:{},
             }
         },
         watch: {},
         mounted() {
-            this.startTest();
-            this.getQuestion();
+            this.startTest()
+            this.getQuestion()
+            this.getLastResult()
         },
         methods: {
             getCountQuestions() {
@@ -63,6 +67,20 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                         _this.getQuestion()
                     } else {
                         _this.showError(response.data.error ?? "Системная ошибка")
+                    }
+                }, function (error) {
+                    _this.showError(error ?? "Системная ошибка")
+                })
+            },
+            getLastResult(){
+                const _this = this
+
+                _this.send("getLastResult", {
+                    testId: _this.testId,
+                }).then(function (response) {
+                    if (response.status === 'success') {
+                        _this.lastResult  = response.data ?? {}
+                        console.log(_this.lastResult)
                     }
                 }, function (error) {
                     _this.showError(error ?? "Системная ошибка")

@@ -28,6 +28,27 @@ class UserResult
         return $this->entity;
     }
 
+    public function getLastResult(): array
+    {
+        $lastResult = $this->getEntity()->getRow([
+            'filter' => [
+                'UF_ACTIVE' => 1,
+                'UF_USER_ID' => $this->userId,
+                'UF_TEST_ID' => $this->testId,
+            ]
+        ]) ?? [];
+
+        if(isset($lastResult['ID'])){
+            return [
+                'id' => $lastResult['ID'],
+                'date' => $lastResult['UF_DATE']->toString(),
+                'result' => $lastResult['UF_CORRECT'],
+            ];
+        }
+
+        return [];
+    }
+
     public function finishTest(): void
     {
         $this->deactivateOldResult();
