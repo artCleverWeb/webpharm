@@ -14,73 +14,15 @@ class ElementsList extends \CBitrixComponent implements Controllerable
     public function configureActions()
     {
         return [
-            'getList' => [
-                'prefilters' => [
-                    new ActionFilter\HttpMethod(
-                        [ActionFilter\HttpMethod::METHOD_POST]
-                    ),
-                    new ActionFilter\Csrf(),
-                ],
-            ],
+
         ];
     }
 
-    public function getListAction($arParams)
+    public function getQuestionAction($arParams)
     {
         try {
-            $list = [];
-
-            $arSelect = [
-                "ID",
-                "NAME",
-                "DETAIL_PAGE_URL",
-                "IBLOCK_ID",
-                "PREVIEW_TEXT",
-                ];
-            
-            $arFilter = [
-                "IBLOCK_ID" => IntVal($arParams['IBLOCK_ID']),
-                "ACTIVE_DATE" => "Y",
-                "ACTIVE" => "Y",
-                "INCLUDE_SUBSECTIONS" => 'Y',
-            ];
-
-            if (!is_null($arParams['SECTION_CODE'])) {
-                $arFilter['SECTION_CODE'] = $arParams['SECTION_CODE'];
-            }
-
-            if (is_array($arParams['FILTER'])) {
-                $arFilter = array_merge($arParams['FILTER'], $arFilter);
-            }
-
-            $arSort = [
-                $arParams['SORT_1'] ?? 'SORT' => $arParams['ORDER_1'] ?? 'desc',
-                $arParams['SORT_2'] ?? 'ID' => $arParams['ORDER_2'] ?? 'asc',
-            ];
-
-            $res = CIBlockElement::GetList(
-                $arSort,
-                $arFilter,
-                false,
-                ["nPageSize" => $arParams['COUNT'] ?? 10],
-                $arSelect
-            );
-
-
-            while ($ob = $res->GetNextElement()) {
-                $item = $ob->GetFields();
-                $item['props'] = $ob->GetProperties();
-
-                $item['section'] = \Kolos\Studio\Helpers\Elements::getSectionInfo($item['ID']);
-
-                $list[] = $item;
-            }
-
-            return AjaxJson::createSuccess(
-                [
-                    'list' => $list,
-                ]
-            );
+            print_r($arParams);
+            die();
         } catch (\Exception $e) {
             $result = new Result();
             $result->addError(new Error($e->getMessage(), $e->getCode()));

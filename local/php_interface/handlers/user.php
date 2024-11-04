@@ -19,7 +19,7 @@ function OnBeforeUserLoginHandler(&$arFields)
 }
 
 
-AddEventHandler("main", "OnBeforeProlog", "MyOnBeforePrologHandler");
+//AddEventHandler("main", "OnBeforeProlog", "MyOnBeforePrologHandler");
 
 function MyOnBeforePrologHandler()
 {

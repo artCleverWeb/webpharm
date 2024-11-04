@@ -24,6 +24,14 @@ class UserProfile extends \CBitrixComponent implements Controllerable
                     new ActionFilter\Csrf(),
                 ],
             ],
+            'setState' => [
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        [ActionFilter\HttpMethod::METHOD_POST]
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+            ],
             'checkCode' => [
                 'prefilters' => [
                     new ActionFilter\HttpMethod(

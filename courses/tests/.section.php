@@ -1,3 +1,3 @@
 <?php
-$sSectionName = "Результат теста подробно";
+$sSectionName = "Тестирование";
 $arDirProperties = [];
