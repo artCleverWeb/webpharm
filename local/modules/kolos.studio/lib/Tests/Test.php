@@ -93,6 +93,9 @@ class Test
                     'NAME',
                     'ID',
                     'UF_COMPLETED_SCORE',
+                    'UF_POINTS',
+                    'UF_COUNT_PEOPLE',
+                    'UF_MONEY',
                 ],
                 'cache' => [
                     'ttl' => 3600,

@@ -19,11 +19,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     </div>
     <button v-show="showBtn" v-html="btnText" @click="sendResult($event)"></button>
     <div v-show="testNeedResult > 0">
-        Для успешного прохождения теста число правильных ответов должно составить не менее <span v-html="testNeedResult"></span>%
+        Для успешного прохождения теста число правильных ответов должно составить не менее <span
+                v-html="testNeedResult"></span>%
     </div>
     <div v-show="lastResult.result != undefined">
         Результат прошлого теста: <span v-html="lastResult.result"></span>%
     </div>
+    <div v-html="getMoneyNotification()"></div>
+    <div v-html="getPointsNotification()"></div>
 </div>
 
 <script>
@@ -36,11 +39,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 arParams: <?= CUtil::PhpToJSObject($arParams)?>,
                 testId: <?= $arResult['testInfo']['ID'] ?>,
                 testNeedResult: <?= $arResult['testInfo']['UF_COMPLETED_SCORE'] ?? 0?>,
+                testMoneyResult: <?= $arResult['testInfo']['UF_MONEY'] ?? 0?>,
+                testMoneyPeople: <?= $arResult['testInfo']['UF_COUNT_PEOPLE'] ?? 0?>,
+                testPointsResult: <?= $arResult['testInfo']['UF_POINTS'] ?? 0?>,
                 question: {},
                 btnText: "Следующий вопрос",
                 showBtn: false,
                 answerId: 0,
-                lastResult:{},
+                lastResult: {},
             }
         },
         watch: {},
@@ -50,6 +56,22 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             this.getLastResult()
         },
         methods: {
+            getPointsNotification() {
+                if (/*this.testMoneyResult <= 0 && */this.testPointsResult > 0) {
+                    return 'При успешном прохождении вы получите ' + this.testPointsResult + ' баллов'
+                }
+                return '';
+            },
+            getMoneyNotification() {
+                if (this.testMoneyResult > 0) {
+                    if (this.testMoneyPeople > 0) {
+                        return 'При успешном прохождении первые ' + this.testMoneyPeople + ' пользователей получат ' + this.testMoneyResult + ' руб'
+                    } else {
+                        return 'При успешном прохождении вы получите ' + this.testMoneyResult + ' руб '
+                    }
+                }
+                return '';
+            },
             getCountQuestions() {
                 return this.currentNum > 0 ? "Вопрос " + this.currentNum + " из " + this.countNum : ''
             },
@@ -72,14 +94,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     _this.showError(error ?? "Системная ошибка")
                 })
             },
-            getLastResult(){
+            getLastResult() {
                 const _this = this
 
                 _this.send("getLastResult", {
                     testId: _this.testId,
                 }).then(function (response) {
                     if (response.status === 'success') {
-                        _this.lastResult  = response.data ?? {}
+                        _this.lastResult = response.data ?? {}
                         console.log(_this.lastResult)
                     }
                 }, function (error) {
@@ -110,7 +132,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                         _this.showBtn = false
                         _this.currentNum = response.data.numQuestion
 
-                        if(_this.currentNum == _this.countNum){
+                        if (_this.currentNum == _this.countNum) {
                             _this.btnText = "Завершить тестирование"
                         }
                     }
