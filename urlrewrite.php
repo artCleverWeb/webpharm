@@ -11,10 +11,10 @@ $arUrlRewrite = array(
         ),
     2 =>
         [
-            'CONDITION' => '#^/courses/tests/#',
+            'CONDITION' => '#^/test/#',
             'RULE' => '',
             'ID' => 'kolos.studio:tests',
-            'PATH' => '/courses/tests/index.php',
+            'PATH' => '/test/index.php',
             'SORT' => 1,
         ],
     3 =>

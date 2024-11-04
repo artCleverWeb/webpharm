@@ -1,3 +1,0 @@
-<?php
-$sSectionName = "Тестирование";
-$arDirProperties = [];
