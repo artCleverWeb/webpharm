@@ -24,7 +24,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     const appFormTest = BX.Vue3.BitrixVue.createApp({
         data() {
             return {
-                currentNum: 0,
+                currentNum: '',
                 countNum: <?= $arResult['countQuestions'] ?>,
                 componentName: '<?= $this->getComponent()->getName() ?>',
                 arParams: <?= CUtil::PhpToJSObject($arParams)?>,
@@ -85,7 +85,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     if (response.status === 'success') {
                         _this.question = response.data || {}
                         _this.showBtn = false
-                        _this.currentNum++
+                        _this.currentNum = response.data.numQuestion
                     }
                 }, function (error) {
                     _this.showError(error ?? "Системная ошибка")

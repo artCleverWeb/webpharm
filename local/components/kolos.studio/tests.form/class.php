@@ -32,10 +32,63 @@ class TestsForm extends \CBitrixComponent implements Controllerable
                     new ActionFilter\Csrf(),
                 ],
             ],
+            'sendResult' => [
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        [ActionFilter\HttpMethod::METHOD_POST]
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+            ],
         ];
     }
 
-    public function startTestAction(array $fields)
+    public function sendResultAction(array $fields)
+    {
+        try {
+            if (is_authorized() === true) {
+                if (($testId = intval($fields['testId'])) > 0) {
+                    \Bitrix\Main\Loader::includeModule('kolos.studio');
+                    $testEntity = new Kolos\Studio\Tests\Test;
+                    if ($testEntity->setTestId($fields['testId']) === true) {
+                        if (($questionId = intval($fields['questionId'])) < 0
+                            || ($answerId = intval($fields['answerId'])) < 0) {
+                            $result = new Result();
+                            $result->addError(new Error("Не передан идентификатор вопроса или теста", 404));
+
+                            return AjaxJson::createError($result->getErrorCollection());
+                        }
+
+
+                        $result = $testEntity->getResultEntity()->saveAnswer($questionId, $answerId);
+                        return AjaxJson::createSuccess($result);
+                    } else {
+                        $result = new Result();
+                        $result->addError(new Error("Тест не найден или не активен", 404));
+
+                        return AjaxJson::createError($result->getErrorCollection());
+                    }
+                } else {
+                    $result = new Result();
+                    $result->addError(new Error("Тест не найден или не активен", 404));
+
+                    return AjaxJson::createError($result->getErrorCollection());
+                }
+            } else {
+                $result = new Result();
+                $result->addError(new Error("Пользователь не авторизован", 403));
+
+                return AjaxJson::createError($result->getErrorCollection());
+            }
+        } catch (\Exception $e) {
+            $result = new Result();
+            $result->addError(new Error($e->getMessage(), $e->getCode()));
+
+            return AjaxJson::createError($result->getErrorCollection());
+        }
+    }
+
+    public function startTestAction(array $fields): AjaxJson
     {
         try {
             if (is_authorized() === true) {

@@ -36,13 +36,16 @@ class Question
                 'error' => "Не выбран тест",
             ];
         }
+
+        $answeredIds = $this->getResultEntitty()->getIdsApplyQuestions();
+
         $question = SectionTable::getRow([
                 'filter' => [
                     'IBLOCK_ID' => self::IBLOCK_ID,
                     'DEPTH_LEVEL' => 2,
                     'ACTIVE' => 'Y',
                     'IBLOCK_SECTION_ID' => $this->testId,
-                    "!ID" => $this->getResultEntitty()->getIdsApplyQuestions(),
+                    "!ID" => $answeredIds,
                 ],
                 'select' => [
                     'ID',
@@ -72,6 +75,7 @@ class Question
 
         shuffle($answers);
         $question['list'] = $answers;
+        $question['numQuestion'] = count($answeredIds) + 1;
 
         return $question;
     }

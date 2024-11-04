@@ -28,8 +28,10 @@ class Result
         return false;
     }
 
-    public function startTest():void
+    public function startTest(): int
     {
+        $resultId = 0;
+
         $questionEntity = \Bitrix\Iblock\Model\Section::compileEntityByIblock(self::IBLOCK_ID);
 
         $resultId = $questionEntity::getRow([
@@ -41,20 +43,83 @@ class Result
                 'select' => ['ID']
             ])['ID'] ?? 0;
 
-        if($resultId < 1){
-            $r = $questionEntity::add(
+        if ($resultId < 1) {
+            $resultAdd = $questionEntity::add(
                 [
                     'ACTIVE' => 'Y',
                     'UF_TEST' => $this->testId,
                     'UF_USER' => $this->userId,
-                    'NAME' => "Тест #" . $this->testId . " пользователя " .  $this->userId,
+                    'NAME' => "Тест #" . $this->testId . " пользователя " . $this->userId,
                     'IBLOCK_ID' => self::IBLOCK_ID,
                     'TIMESTAMP_X' => DateTime::createFromTimestamp(time()),
                 ]
             );
-            var_dump($r->getErrorMessages());
-            die();
+
+            if ($resultAdd->isSuccess()) {
+                $resultId = $resultAdd->getId();
+            }
         }
+
+        return $resultId;
+    }
+
+    public function saveAnswer(int $questionId, int $answerId): array
+    {
+        if ($questionId < 1 || $answerId < 1) {
+            return [
+                'status' => false,
+                'error' => 'Не переданы значения идентификатора вопроса или ответа',
+            ];
+        }
+
+        if ($this->userId < 1) {
+            return [
+                'status' => false,
+                'error' => 'Пользователь не авторизован',
+            ];
+        }
+
+        if ($this->testId < 1) {
+            return [
+                'status' => false,
+                'error' => 'Не передан идентификатор теста',
+            ];
+        }
+
+        $sectionId = $this->startTest();
+
+        if ($sectionId < 1) {
+            return [
+                'status' => false,
+                'error' => 'Не удалось сохранить результат тестирования. Код: 001',
+            ];
+        }
+
+        $entityClass = new \CIBlockElement();
+
+        $resultAdd = $entityClass->Add([
+            'IBLOCK_ID' => self::IBLOCK_ID,
+            'IBLOCK_SECTION_ID' => $sectionId,
+            'IBLOCK_SECTION' => [$sectionId],
+            'NAME' => "Ответ на вопрос #" . $questionId . " пользователя " . $this->userId,
+            'PROPERTY_VALUES' => [
+                'QUESTION' => $questionId,
+                'ANSWER' => $answerId,
+            ]
+        ]);
+
+        if ($resultAdd > 0) {
+            return [
+                'status' => true,
+
+            ];
+        }
+
+        return [
+            'status' => false,
+            'error' => 'Не удалось сохранить результат тестирования. Код: 002',
+            'errors' => $resultAdd->LAST_ERROR,
+        ];
     }
 
     public function getIdsApplyQuestions(): array
@@ -75,16 +140,15 @@ class Result
         }
 
         $entityClass = \Bitrix\Iblock\Iblock::wakeUp(self::IBLOCK_ID)->getEntityDataClass();
-        $answer =  $entityClass::getList([
+        $answer = $entityClass::getList([
             'filter' => [
                 'IBLOCK_SECTION_ID' => $resultId,
             ],
             'select' => [
-                'ID',
                 'QUESTION',
             ],
-        ])->fetchAll();
-        //print_r($answer);
-        return [];
+        ])->fetchAll() ?? [];
+
+        return array_unique(array_column($answer, 'IBLOCK_ELEMENTS_ELEMENT_CORPORATE_TESTS_RESULTS_QUESTION_IBLOCK_GENERIC_VALUE')) ?? [];
     }
 }
