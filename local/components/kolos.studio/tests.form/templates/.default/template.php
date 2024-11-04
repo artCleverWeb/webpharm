@@ -18,6 +18,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         <label :for="item.ID" v-html="item.NAME"></label>
     </div>
     <button v-show="showBtn" v-html="btnText" @click="sendResult($event)"></button>
+    <div v-show="testNeedResult > 0">
+        Для успешного прохождения теста число правильных ответов должно составить не менее <span v-html="testNeedResult"></span>%
+    </div>
+
 </div>
 
 <script>
@@ -29,6 +33,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 componentName: '<?= $this->getComponent()->getName() ?>',
                 arParams: <?= CUtil::PhpToJSObject($arParams)?>,
                 testId: <?= $arResult['testInfo']['ID'] ?>,
+                testNeedResult: <?= $arResult['testInfo']['UF_COMPLETED_SCORE'] ?? 0?>,
                 question: {},
                 btnText: "Следующий вопрос",
                 showBtn: false,
@@ -42,7 +47,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         },
         methods: {
             getCountQuestions() {
-                return "Вопрос " + this.currentNum + " из " + this.countNum
+                return this.currentNum > 0 ? "Вопрос " + this.currentNum + " из " + this.countNum : ''
             },
             sendResult($event) {
                 const _this = this

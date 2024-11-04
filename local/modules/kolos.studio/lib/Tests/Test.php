@@ -72,7 +72,9 @@ class Test
 
     public function getInfo()
     {
-        return \Bitrix\Iblock\SectionTable::getRow([
+        $testEntity = \Bitrix\Iblock\Model\Section::compileEntityByIblock(self::IBLOCK_ID);
+
+        return  $testEntity::getRow([
                 'filter' => [
                     'ACTIVE' => 'Y',
                     'ID' => $this->testId,
@@ -82,6 +84,7 @@ class Test
                 'select' => [
                     'NAME',
                     'ID',
+                    'UF_COMPLETED_SCORE',
                 ],
                 'cache' => [
                     'ttl' => 3600,
