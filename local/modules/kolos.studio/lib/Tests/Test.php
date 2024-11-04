@@ -70,11 +70,19 @@ class Test
         return $this->testId > 0;
     }
 
+    public function isFinish(): bool
+    {
+        $allCount = $this->getQuestionEntity()->getCount();
+        $userCount = $this->getResultEntity()->getCount();
+
+        return $allCount <= $userCount;
+    }
+
     public function getInfo()
     {
         $testEntity = \Bitrix\Iblock\Model\Section::compileEntityByIblock(self::IBLOCK_ID);
 
-        return  $testEntity::getRow([
+        return $testEntity::getRow([
                 'filter' => [
                     'ACTIVE' => 'Y',
                     'ID' => $this->testId,

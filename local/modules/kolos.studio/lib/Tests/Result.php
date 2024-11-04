@@ -109,9 +109,15 @@ class Result
         ]);
 
         if ($resultAdd > 0) {
+            $isFinish = $this->isFinish();
+
+            if ($isFinish === true) {
+                //TODO: Рассчитать результат теста
+            }
+
             return [
                 'status' => true,
-
+                'isFinish' => $isFinish,
             ];
         }
 
@@ -141,14 +147,100 @@ class Result
 
         $entityClass = \Bitrix\Iblock\Iblock::wakeUp(self::IBLOCK_ID)->getEntityDataClass();
         $answer = $entityClass::getList([
-            'filter' => [
-                'IBLOCK_SECTION_ID' => $resultId,
-            ],
-            'select' => [
-                'QUESTION',
-            ],
-        ])->fetchAll() ?? [];
+                'filter' => [
+                    'IBLOCK_SECTION_ID' => $resultId,
+                ],
+                'select' => [
+                    'QUESTION',
+                ],
+            ])->fetchAll() ?? [];
 
-        return array_unique(array_column($answer, 'IBLOCK_ELEMENTS_ELEMENT_CORPORATE_TESTS_RESULTS_QUESTION_IBLOCK_GENERIC_VALUE')) ?? [];
+        return array_unique(
+                array_column($answer, 'IBLOCK_ELEMENTS_ELEMENT_CORPORATE_TESTS_RESULTS_QUESTION_IBLOCK_GENERIC_VALUE')
+            ) ?? [];
+    }
+
+    public function getCount(): int
+    {
+        $questionEntity = \Bitrix\Iblock\Model\Section::compileEntityByIblock(self::IBLOCK_ID);
+
+        $resultId = $questionEntity::getRow([
+                'filter' => [
+                    'ACTIVE' => 'Y',
+                    'UF_TEST' => $this->testId,
+                    'UF_USER' => $this->userId,
+                ],
+                'select' => ['ID']
+            ])['ID'] ?? 0;
+
+        if ($resultId < 1) {
+            return 0;
+        }
+
+        $entityClass = \Bitrix\Iblock\Iblock::wakeUp(self::IBLOCK_ID)->getEntityDataClass();
+        $answer = $entityClass::getList([
+                'filter' => [
+                    'IBLOCK_SECTION_ID' => $resultId,
+                ],
+                'select' => [
+                    'QUESTION',
+                ],
+            ])->fetchAll() ?? [];
+
+        return count(
+                array_unique(
+                    array_column(
+                        $answer,
+                        'IBLOCK_ELEMENTS_ELEMENT_CORPORATE_TESTS_RESULTS_QUESTION_IBLOCK_GENERIC_VALUE'
+                    )
+                )
+            ) ?? 0;
+    }
+
+    public function getAnswers(): array
+    {
+        $questionEntity = \Bitrix\Iblock\Model\Section::compileEntityByIblock(self::IBLOCK_ID);
+
+        $resultId = $questionEntity::getRow([
+                'filter' => [
+                    'ACTIVE' => 'Y',
+                    'UF_TEST' => $this->testId,
+                    'UF_USER' => $this->userId,
+                ],
+                'select' => ['ID']
+            ])['ID'] ?? 0;
+
+        if ($resultId < 1) {
+            return [];
+        }
+
+        $entityClass = \Bitrix\Iblock\Iblock::wakeUp(self::IBLOCK_ID)->getEntityDataClass();
+        $answerObj = $entityClass::getList([
+                'filter' => [
+                    'IBLOCK_SECTION_ID' => $resultId,
+                ],
+                'select' => [
+                    'QUESTION',
+                    'ANSWER',
+                ],
+            ])->fetchAll() ?? [];
+
+        $answer = [];
+        foreach ($answerObj as $item) {
+            $answer[$item['IBLOCK_ELEMENTS_ELEMENT_CORPORATE_TESTS_RESULTS_QUESTION_IBLOCK_GENERIC_VALUE']] =
+                $item['IBLOCK_ELEMENTS_ELEMENT_CORPORATE_TESTS_RESULTS_ANSWER_IBLOCK_GENERIC_VALUE'];
+        }
+
+        return $answer ?? [];
+    }
+
+    private function isFinish(): bool
+    {
+        $testEntity = new Test;
+        if ($testEntity->setTestId($this->testId) === true) {
+            return $testEntity->isFinish();
+        }
+
+        return false;
     }
 }

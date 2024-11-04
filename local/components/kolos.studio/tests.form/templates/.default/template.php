@@ -14,7 +14,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     <div v-html="getCountQuestions()"></div>
     <div v-html="question.NAME" :data-question-id="question.ID"></div>
     <div class="" v-for="item in question.list">
-        <input type="radio" name="question" :value="item.ID" @change="setAnswer($event)">
+        <input type="radio" :name="question.ID" :value="item.ID" @change="setAnswer($event)">
         <label :for="item.ID" v-html="item.NAME"></label>
     </div>
     <button v-show="showBtn" v-html="btnText" @click="sendResult($event)"></button>
@@ -91,6 +91,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                         _this.question = response.data || {}
                         _this.showBtn = false
                         _this.currentNum = response.data.numQuestion
+
+                        if(_this.currentNum == _this.countNum){
+                            _this.btnText = "Завершить тестирование"
+                        }
                     }
                 }, function (error) {
                     _this.showError(error ?? "Системная ошибка")
