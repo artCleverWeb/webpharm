@@ -24,6 +24,14 @@ $arUrlRewrite=array (
     'PATH' => '/journal/index.php',
     'SORT' => 100,
   ),
+  4 =>
+        [
+            'CONDITION' => '#^/test/#',
+            'RULE' => '',
+            'ID' => 'kolos.studio:tests',
+            'PATH' => '/test/index.php',
+            'SORT' => 1,
+        ],
   1 => 
   array (
     'CONDITION' => '#^/rest/#',

@@ -20,14 +20,14 @@ $APPLICATION->IncludeComponent(
         "AJAX_OPTION_STYLE" => "Y",
         "CACHE_TIME" => "36000000",
         "CACHE_TYPE" => "A",
-        "IBLOCK_ID" => "6",
+        "IBLOCK_ID" => IBLOCK_ID_COURSES_TEST,
         "IBLOCK_TYPE" => "content",
         "COMPONENT_TEMPLATE" => ".default",
         "SEF_MODE" => "Y",
-        "SEF_FOLDER" => "/courses/tests/",
+        "SEF_FOLDER" => "/test/",
         "SEF_URL_TEMPLATES" => array(
             "test_list" => "attempts/",
-            "detail_test" => "#SECTION_ID#/",
+            "detail_test" => "#SECTION_CODE#/",
             "attempt_list" => "attempts/#TEST_ID#/",
             "detail_attempt" => "attempts/#TEST_ID#/#SECTION_ID#/",
         )

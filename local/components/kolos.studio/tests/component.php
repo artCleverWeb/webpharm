@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var global $arParams
  */
@@ -13,7 +12,7 @@ $arDefaultVariableAliases404 = [];
 $arDefaultVariableAliases = [];
 $arComponentVariables = [
     "COURSE_CODE",
-    "SECTION_ID",
+    "SECTION_CODE",
 ];
 
 $arVariables = [];
