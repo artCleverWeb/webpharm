@@ -28,17 +28,41 @@ class UserResult
         return $this->entity;
     }
 
+    public function getDetailResult(): array
+    {
+        $result = $this->getLastResult();
+
+        if (count($result) > 0) {
+            $result['questions'] = $this->getQuestionEntity()->getAllQuestion(false);
+            $result['answers'] = $this->getResultEntity()->getAnswers();
+
+            foreach ($result['questions']['questions'] as &$question) {
+                $question['answers'] = $result['questions']['answers'][$question['ID']];
+                foreach($question['answers'] as &$answer){
+                    if($answer['ID'] == $result['answers'][$question['ID']]){
+                        $answer['IS_SELECTED'] = true;
+                    }
+                }
+                unset($result['questions']['answers'][$question['ID']]);
+            }
+
+            unset($result['answers']);
+        }
+
+        return $result['questions'];
+    }
+
     public function getLastResult(): array
     {
         $lastResult = $this->getEntity()->getRow([
-            'filter' => [
-                'UF_ACTIVE' => 1,
-                'UF_USER_ID' => $this->userId,
-                'UF_TEST_ID' => $this->testId,
-            ]
-        ]) ?? [];
+                'filter' => [
+                    'UF_ACTIVE' => 1,
+                    'UF_USER_ID' => $this->userId,
+                    'UF_TEST_ID' => $this->testId,
+                ]
+            ]) ?? [];
 
-        if(isset($lastResult['ID'])){
+        if (isset($lastResult['ID'])) {
             return [
                 'id' => $lastResult['ID'],
                 'date' => $lastResult['UF_DATE']->toString(),

@@ -9,24 +9,64 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 /** @global CMain $APPLICATION */
 \Bitrix\Main\UI\Extension::load('ui.vue3');
 ?>
-
+<style>
+    .userSelect:before {
+        height: 40px;
+        content: '\2713';
+        color: red;
+        width: 40px;
+        font-size: 23px;
+    }
+    .green {
+        background: #0080004f;
+    }
+</style>
 <div id="app-form-test">
-    <div v-html="getCountQuestions()"></div>
-    <div v-html="question.NAME" :data-question-id="question.ID"></div>
-    <div class="" v-for="item in question.list">
-        <input type="radio" :name="question.ID" :value="item.ID" @change="setAnswer($event)">
-        <label :for="item.ID" v-html="item.NAME"></label>
-    </div>
-    <button v-show="showBtn" v-html="btnText" @click="sendResult($event)"></button>
-    <div v-show="testNeedResult > 0">
-        Для успешного прохождения теста число правильных ответов должно составить не менее <span
-                v-html="testNeedResult"></span>%
-    </div>
-    <div v-show="lastResult.result != undefined">
-        Результат прошлого теста: <span v-html="lastResult.result"></span>%
-    </div>
-    <div v-html="getMoneyNotification()"></div>
-    <div v-html="getPointsNotification()"></div>
+    <template v-if="!finishTest">
+        <div v-html="getCountQuestions()"></div>
+        <div v-html="question.NAME" :data-question-id="question.ID"></div>
+        <div class="" v-for="item in question.list">
+            <input type="radio" :name="question.ID" :value="item.ID" @change="setAnswer($event)">
+            <label :for="item.ID" v-html="item.NAME"></label>
+        </div>
+        <button v-show="showBtn" v-html="btnText" @click="sendResult($event)"></button>
+        <div v-show="testNeedResult > 0">
+            Для успешного прохождения теста число правильных ответов должно составить не менее <span
+                    v-html="testNeedResult"></span>%
+        </div>
+        <div v-show="lastResult.result != undefined">
+            Результат прошлого теста: <span v-html="lastResult.result"></span>%
+        </div>
+        <div v-html="getMoneyNotification()"></div>
+        <div v-html="getPointsNotification()"></div>
+    </template>
+    <template v-if="finishTest && !showDetail">
+        <div>
+            Поздравляем!
+            <div v-html="showResult()"></div>
+        </div>
+        <div>
+            <button v-if="currentPercent < 100">Пройти тест еще раз</button>
+            <button @click="showDetailResult($event)">Посмотреть результат подробно</button>
+        </div>
+    </template>
+    <template v-if="finishTest && showDetail">
+        <h1>Результаты тестирования</h1>
+        <div v-html="showResultMessage()"></div>
+        <div>Правильные ответы обведены зеленым цветом. Ваши ответы отмечены галочками</div>
+        <hr>
+        <template v-for="question in detailResultTest.questions">
+            <div v-html="question.NAME"></div>
+            <template v-for="answer in question.answers">
+                <div v-html="answer.NAME" :class="{green: answer.IS_CORRECT, userSelect: answer.IS_SELECTED}"></div>
+            </template>
+            <hr>
+        </template>
+        <div>
+            <button v-if="currentPercent < 100">Пройти тест еще раз</button>
+            <a href="/">К списку курсов</a>
+        </div>
+    </template>
 </div>
 
 <script>
@@ -47,13 +87,22 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 showBtn: false,
                 answerId: 0,
                 lastResult: {},
+                finishTest: <?= $arResult['finishTest'] ?? false?>,
+                currentPercent: 0,
+                showDetail: false,
+                detailResultTest: {},
             }
         },
         watch: {},
         mounted() {
-            this.startTest()
-            this.getQuestion()
-            this.getLastResult()
+            if(this.finishTest){
+                this.showFinishPage()
+            }
+            else{
+                this.startTest()
+                this.getQuestion()
+                this.getLastResult()
+            }
         },
         methods: {
             getPointsNotification() {
@@ -61,6 +110,21 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     return 'При успешном прохождении вы получите ' + this.testPointsResult + ' баллов'
                 }
                 return '';
+            },
+            showDetailResult($event) {
+                const _this = this
+
+                $event.preventDefault()
+                _this.send("getDetailResultTest", {
+                    testId: _this.testId,
+                }).then(function (response) {
+                    if (response.status === 'success') {
+                        _this.detailResultTest = response.data ?? {}
+                        _this.showDetail = true
+                    }
+                }, function (error) {
+                    _this.showError(error ?? "Системная ошибка")
+                })
             },
             getMoneyNotification() {
                 if (this.testMoneyResult > 0) {
@@ -75,6 +139,30 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             getCountQuestions() {
                 return this.currentNum > 0 ? "Вопрос " + this.currentNum + " из " + this.countNum : ''
             },
+            showResultMessage() {
+                if (this.currentPercent >= this.testPointsResult) {
+                    return "Тест пройден: <b>" + this.currentPercent + "%</b> правильных ответов"
+                } else {
+                    return "Тест не пройден: <b>" + this.currentPercent + "%</b> правильных ответов"
+                }
+
+            },
+            showResult() {
+                return "Вы завершили тест, Ваш результат " + this.currentPercent + "%, при необходимых " + this.testPointsResult + "%"
+            },
+            showFinishPage() {
+                const _this = this
+
+                _this.send("getLastResult", {
+                    testId: _this.testId,
+                }).then(function (response) {
+                    if (response.status === 'success') {
+                        _this.currentPercent = response.data.result ?? 0
+                    }
+                }, function (error) {
+                    _this.showError(error ?? "Системная ошибка")
+                })
+            },
             sendResult($event) {
                 const _this = this
 
@@ -86,7 +174,12 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     answerId: _this.answerId,
                 }).then(function (response) {
                     if (response.status === 'success' && response.data.status == true) {
-                        _this.getQuestion()
+                        if (response.data.isFinish === true) {
+                            _this.finishTest = true
+                            _this.showFinishPage()
+                        } else {
+                            _this.getQuestion()
+                        }
                     } else {
                         _this.showError(response.data.error ?? "Системная ошибка")
                     }
@@ -102,8 +195,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 }).then(function (response) {
                     if (response.status === 'success') {
                         _this.lastResult = response.data ?? {}
-                        console.log(_this.lastResult)
-                    }
+                       }
                 }, function (error) {
                     _this.showError(error ?? "Системная ошибка")
                 })
