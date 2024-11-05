@@ -1,0 +1,23 @@
+<h3>Фото/Видео/Презентация в две колонки:</h3>
+<div class="grid">
+    <div class="grid__item grid__item_w-6 grid__item_sm-w-12">
+        <a href="/assets/upload/images/2x/6-1.jpg" class="picture js-popup-media-open" data-gallery="1">
+            <picture>
+                <source media="(max-width: 767px)" srcset="/assets/upload/images/mobile/6-1.webp" type="image/webp">
+                <source srcset="/assets/upload/images/webp/6-1.webp, /assets/upload/images/2x/webp/6-1.webp 2x" type="image/webp">
+                <img src="/assets/upload/images/6-1.jpg" srcset="/assets/upload/images/2x/6-1.jpg 2x" alt="" class="picture__img" width="438" height="320">
+            </picture>
+            <span class="picture__overlay"></span>
+        </a>
+    </div>
+    <div class="grid__item grid__item_w-6 grid__item_sm-w-12">
+        <a href="/assets/upload/images/2x/6-2.jpg" class="picture js-popup-media-open" data-gallery="1">
+            <picture>
+                <source media="(max-width: 767px)" srcset="/assets/upload/images/mobile/6-2.webp" type="image/webp">
+                <source srcset="/assets/upload/images/webp/6-2.webp, /assets/upload/images/2x/webp/6-2.webp 2x" type="image/webp">
+                <img src="/assets/upload/images/6-2.jpg" srcset="/assets/upload/images/2x/6-2.jpg 2x" alt="" class="picture__img" width="438" height="320">
+            </picture>
+            <span class="picture__overlay"></span>
+        </a>
+    </div>
+</div>

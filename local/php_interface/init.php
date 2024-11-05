@@ -17,6 +17,7 @@ require_once __DIR__ . '/userTypeProperty/usertypeuser.php';
 
 require_once __DIR__ . '/handlers/user.php';
 require_once __DIR__ . '/handlers/sms.php';
+require_once __DIR__ . '/include/classes/image.php';
 
 Loader::includeModule('iblock');
 Loader::includeModule('kolos.studio');
@@ -24,6 +25,7 @@ Loader::includeModule('kolos.studio');
 Loader::registerAutoLoadClasses(null, [
     'CUserTypeYesNo' => __DIR__ . '/userTypeProperty/usertypeyesno.php',
     'CUserTypeUser' => __DIR__ . '/userTypeProperty/usertypeuser.php',
+    'Image' => __DIR__ . '/include/classes/image.php',
 ]);
 
 AddEventHandler('iblock', 'OnIBlockPropertyBuildList', ['CUserTypeYesNo', 'GetUserTypeDescription']);
