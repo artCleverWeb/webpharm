@@ -9,6 +9,10 @@ class Test
     private $questionEntity;
     private $resultEntity;
 
+    public function retryTest():bool
+    {
+        return $this->getResultEntity()->deactivate();
+    }
 
     public function getQuestionEntity(): Question
     {

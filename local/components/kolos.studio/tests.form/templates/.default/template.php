@@ -46,7 +46,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             <div v-html="showResult()"></div>
         </div>
         <div>
-            <button v-if="currentPercent < 100">Пройти тест еще раз</button>
+            <button v-if="currentPercent < 100" @click="retryTest($event)">Пройти тест еще раз</button>
             <button @click="showDetailResult($event)">Посмотреть результат подробно</button>
         </div>
     </template>
@@ -63,7 +63,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             <hr>
         </template>
         <div>
-            <button v-if="currentPercent < 100">Пройти тест еще раз</button>
+            <button v-if="currentPercent < 100" @click="retryTest($event)">Пройти тест еще раз</button>
             <a href="/">К списку курсов</a>
         </div>
     </template>
@@ -87,7 +87,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 showBtn: false,
                 answerId: 0,
                 lastResult: {},
-                finishTest: <?= $arResult['finishTest'] ?? false?>,
+                finishTest: <?= CUtil::PhpToJSObject($arResult['finishTest']) ?? false?>,
                 currentPercent: 0,
                 showDetail: false,
                 detailResultTest: {},
@@ -95,7 +95,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         },
         watch: {},
         mounted() {
-            if(this.finishTest){
+            if(this.finishTest === true){
                 this.showFinishPage()
             }
             else{
@@ -105,6 +105,25 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             }
         },
         methods: {
+            retryTest($event){
+                $event.preventDefault()
+                const _this = this
+                _this.send("retryTest", {
+                    testId: _this.testId,
+                }).then(function (response) {
+                    if (response.status === 'success' && response.data.status === true) {
+                        _this.detailResultTest = {}
+                        _this.showDetail = false
+                        _this.currentPercent = 0
+                        _this.finishTest = false
+                        _this.startTest()
+                        _this.getQuestion()
+                        _this.getLastResult()
+                    }
+                }, function (error) {
+                    _this.showError(error ?? "Системная ошибка")
+                })
+            },
             getPointsNotification() {
                 if (/*this.testMoneyResult <= 0 && */this.testPointsResult > 0) {
                     return 'При успешном прохождении вы получите ' + this.testPointsResult + ' баллов'

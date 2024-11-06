@@ -16,6 +16,14 @@ class TestsForm extends \CBitrixComponent implements Controllerable
     public function configureActions()
     {
         return [
+            'retryTest' => [
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        [ActionFilter\HttpMethod::METHOD_POST]
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+            ],
             'getQuestion' => [
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
@@ -57,6 +65,41 @@ class TestsForm extends \CBitrixComponent implements Controllerable
                 ],
             ],
         ];
+    }
+
+    public function retryTestAction(array $fields): AjaxJson
+    {
+        try {
+            if (is_authorized() === true) {
+                if (($testId = intval($fields['testId'])) > 0) {
+                    \Bitrix\Main\Loader::includeModule('kolos.studio');
+                    $testEntity = new Kolos\Studio\Tests\Test();
+                    if ($testEntity->setTestId($testId) === true) {
+                        return AjaxJson::createSuccess(['status' =>  $testEntity->retryTest()]);
+                    } else {
+                        $result = new Result();
+                        $result->addError(new Error("Тест не найден или не активен", 404));
+
+                        return AjaxJson::createError($result->getErrorCollection());
+                    }
+                } else {
+                    $result = new Result();
+                    $result->addError(new Error("Тест не найден или не активен", 404));
+
+                    return AjaxJson::createError($result->getErrorCollection());
+                }
+            } else {
+                $result = new Result();
+                $result->addError(new Error("Пользователь не авторизован", 403));
+
+                return AjaxJson::createError($result->getErrorCollection());
+            }
+        } catch (\Exception $e) {
+            $result = new Result();
+            $result->addError(new Error($e->getMessage(), $e->getCode()));
+
+            return AjaxJson::createError($result->getErrorCollection());
+        }
     }
 
     public function getDetailResultTestAction(array $fields): AjaxJson
@@ -253,7 +296,7 @@ class TestsForm extends \CBitrixComponent implements Controllerable
                     $APPLICATION->SetPageProperty('title', $this->arResult['testInfo']['NAME']);
 
                     $this->arResult['countQuestions'] = $testEntity->getQuestionEntity()->getCount();
-                    $this->arResult['finishTest'] = $testEntity->isFinish();
+                    $this->arResult['finishTest'] = $testEntity->isFinish() ?? false;
                 } else {
                     CHTTP::SetStatus("404 Not Found");
                     @define("ERROR_404", "Y");

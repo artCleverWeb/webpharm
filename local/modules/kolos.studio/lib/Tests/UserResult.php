@@ -27,7 +27,7 @@ class UserResult
 
         return $this->entity;
     }
-
+    
     public function getDetailResult(): array
     {
         $result = $this->getLastResult();
@@ -35,7 +35,6 @@ class UserResult
         if (count($result) > 0) {
             $result['questions'] = $this->getQuestionEntity()->getAllQuestion(false);
             $result['answers'] = $this->getResultEntity()->getAnswers();
-
             foreach ($result['questions']['questions'] as &$question) {
                 $question['answers'] = $result['questions']['answers'][$question['ID']];
                 foreach($question['answers'] as &$answer){
@@ -96,7 +95,6 @@ class UserResult
         $questions = $this->getQuestionEntity()->getAllQuestion(true);
         $answers = $this->getResultEntity()->getAnswers();
 
-
         foreach ($questions['questions'] as $question) {
             $allQuestions++;
             $questionsId = $question['ID'];
@@ -108,7 +106,9 @@ class UserResult
             }
         }
 
-        $percent = (($allQuestions - $correctAnswer) / (($allQuestions + $correctAnswer) / 2)) * 100;
+        $percent = (($correctAnswer - $allQuestions) / $allQuestions ) * 100;
+        $percent = 100 - ( $percent > 0 ? $percent : 0 - $percent);
+
         return round($percent);
     }
 
@@ -118,8 +118,11 @@ class UserResult
             'filter' => [
                 'UF_USER_ID' => $this->userId,
                 'UF_TEST_ID' => $this->testId,
-                'UF_ACTIVE' => 'Y',
+                'UF_ACTIVE' => 1,
             ],
+            'select' => [
+                'ID',
+            ]
         ]);
 
         foreach ($oldList as $item) {

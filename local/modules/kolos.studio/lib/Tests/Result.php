@@ -4,6 +4,7 @@ namespace Kolos\Studio\Tests;
 
 use Bitrix\Iblock\ElementTable;
 use Bitrix\Iblock\SectionTable;
+use Bitrix\Main\Loader;
 use Bitrix\Main\Type\DateTime;
 
 class Result
@@ -109,15 +110,9 @@ class Result
         ]);
 
         if ($resultAdd > 0) {
-            $isFinish = $this->isFinish();
-
-            if ($isFinish === true) {
-                //TODO: Рассчитать результат теста
-            }
-
             return [
                 'status' => true,
-                'isFinish' => $isFinish,
+                'isFinish' => $this->isFinish(),
             ];
         }
 
@@ -158,6 +153,32 @@ class Result
         return array_unique(
                 array_column($answer, 'IBLOCK_ELEMENTS_ELEMENT_CORPORATE_TESTS_RESULTS_QUESTION_IBLOCK_GENERIC_VALUE')
             ) ?? [];
+    }
+
+    public function deactivate(): bool
+    {
+        $questionEntity = \Bitrix\Iblock\Model\Section::compileEntityByIblock(self::IBLOCK_ID);
+
+        $resultId = $questionEntity::getRow([
+                'filter' => [
+                    'ACTIVE' => 'Y',
+                    'UF_TEST' => $this->testId,
+                    'UF_USER' => $this->userId,
+                ],
+                'select' => ['ID']
+            ])['ID'] ?? 0;
+
+        if ($resultId < 1) {
+            return false;
+        }
+
+      //  CModule::IncludeModule("iblock");
+
+        $sectionClass = new \CIBlockSection;
+
+        $sectionClass->Update($resultId, ['ACTIVE' => 'N']);
+
+        return true;
     }
 
     public function getCount(): int
