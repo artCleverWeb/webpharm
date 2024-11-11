@@ -1,0 +1,26 @@
+.popup {display: none; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; text-align: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0.5s ease;}
+.popup__overlay {background: #30333A; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6;}
+.popup__data {background: #fff; width: 100%; padding: 45px 65px 45px; max-width: 438px; max-height: 100%; margin: auto auto; overflow: auto; position: relative; border: 2px solid #D6D6D6; border-radius: 20px; }
+.popup__head {margin-bottom: 38px;}
+.popup__title {font-size: 36px; }
+.popup__button-close {display: flex; font-size: 20px; color: var(--color-dark); background: none; border: 0; padding: 0; position: absolute; top: 14px; right: 14px; cursor: pointer; transition: all 0.2s ease;}
+.popup__button-close:hover {color: var(--color-brand); }
+.popup.shown {display: flex; opacity: 1; visibility: visible; }
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (min-width: 992px) {
+	.popup__data::-webkit-scrollbar {width: 8px;}
+	.popup__data::-webkit-scrollbar-track {background: transparent;}
+	.popup__data::-webkit-scrollbar-thumb {background-color: rgba(0,0,0, 0.2); border: 0;}
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.popup__title {font-size: 24px; font-weight: normal;}
+}

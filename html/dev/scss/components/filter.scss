@@ -1,0 +1,18 @@
+.filter {margin-top: 18px;}
+.filter__tags {}
+.filter__tags-list {display: flex; flex-wrap: wrap; gap: 8px 8px; }
+.filter__tags-item {padding: 4px 8px; background: #EEEEEE; font-size: 14px; color: var(--color-default); border-radius: 4px; text-decoration: none;}
+.filter__tags-item:hover,
+.filter__tags-item.active {background: rgba(255,27,36, 0.1); color: rgba(255,27,36, 1); text-decoration: none;}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+
+}

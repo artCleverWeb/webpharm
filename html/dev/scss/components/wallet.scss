@@ -1,0 +1,19 @@
+.wallet {}
+.wallet__tabs {}
+.wallet__tabs-nav {margin-bottom: 32px;}
+.wallet__tabs-nav-item {}
+.wallet__tabs-content {}
+.wallet__tabs-content-item {display: none;}
+.wallet__tabs-content-item.active {display: block;}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.wallet__tabs-nav {margin-bottom: 24px;}
+}

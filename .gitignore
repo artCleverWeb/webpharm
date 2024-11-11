@@ -31,3 +31,6 @@ error.log.*
 nxs.html
 nxs.php
 import
+
+/html/node_modules/*
+/html/dist/*

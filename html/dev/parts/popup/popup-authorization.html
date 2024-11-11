@@ -1,0 +1,184 @@
+<div class="popup authorization popup-authorization js-popup-authorization" data-popup-id="popup-authorization">
+	<div class="popup__overlay" data-popup-trigger="close"></div>
+	<div class="popup__data">
+		<form action="#" class="form authorization__form">
+			<div class="authorization__step authorization__step_login active">
+				<div class="authorization__head">
+					<div class="title title_size-2 title_color-dark authorization__title">
+						Вход
+					</div>
+				</div>
+				<div class="form__fields authorization__form-fields">
+					<div class="form__item form__item_phone validation">
+						<div class="form__caption">
+							Введите номер телефона
+						</div>
+						<div class="field-form form__field">
+							<input type="text" class="input-text input-text_text-bold field-form__input-text" placeholder="+7 (___) ___-__-__" data-mask="+7 (000) 000-00-00" data-validation-type="phone" />
+						</div>
+						<div class="form__item-info form__item-info_error u-text-left">
+							Неверный формат номера телефона
+						</div>
+					</div>
+
+					<div class="form__item form__item_padding-1">
+						<button type="submit" class="button-b button-b_padding-1 button-b_width-full">
+							Войти
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="authorization__step authorization__step_login-confirmation">
+				<div class="headline authorization__head">
+					<div class="title title_size-3 title_color-dark authorization__title">
+						Подтверждение входа
+					</div>
+				</div>
+				<div class="form__fields authorization__form-fields">
+					<div class="form__item form__item_code validation">
+						<div class="form__caption">
+							Введите последние<br/> 4 цифры номера входящего звонка или<br/> код из SMS 
+						</div>
+						<div class="field-form form__field">
+							<input type="text" class="input-text input-text_text-center field-form__input-text" placeholder="****" data-mask="0000" data-validation-type="code" />
+						</div>
+						<div class="form__item-info form__item-info_error">
+							Неверный код
+						</div>
+					</div>
+
+					<div class="form__item form__item_button-submit">
+						<button type="submit" class="button-b button-b_width-full">
+							Войти
+						</button>
+					</div>
+
+					<div class="form__info">
+						<div class="countdown" data-time="45000">
+							<div class="countdown__part countdown__part_time">
+								Отправить код повторно через
+								<span class="countdown__time"></span>
+								сек
+							</div>
+							<div class="countdown__part countdown__part_expired">
+								<a href="#" class="link link_type-1 countdown__button-restart">
+									Отправить код повторно
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="authorization__step authorization__step_registration">
+				<div class="headline authorization__head">
+					<div class="title title_size-3 title_color-dark authorization__title">
+						Регистрация нового покупателя
+					</div>
+				</div>
+				<div class="form__fields authorization__form-fields">
+					<div class="form__item form__item_phone validation">
+						<div class="field-form form__field">
+							<input type="text" class="input-text input-text_text-bold field-form__input-text" placeholder="+7 (___) ___-__-__" data-mask="+7 (000) 000-00-00" data-validation-type="phone" />
+						</div>
+						<div class="form__item-info form__item-info_error u-text-left">
+							Неверный формат номера телефона
+						</div>
+					</div>
+
+					<div class="form__item form__item_code validation">
+						<div class="form__caption">
+							Введите последние<br/> 4 цифры номера входящего звонка или<br/> код из SMS 
+						</div>
+						<div class="field-form form__field">
+							<input type="text" class="input-text input-text_text-center field-form__input-text" placeholder="****" data-mask="0000" data-validation-type="code" />
+						</div>
+						<div class="form__item-info form__item-info_error">
+							Неверный код
+						</div>
+						<div class="form__item-info">
+							<div class="countdown" data-time="45000">
+								<div class="countdown__part countdown__part_time">
+									Отправить код повторно через
+									<span class="countdown__time"></span>
+									сек
+								</div>
+								<div class="countdown__part countdown__part_expired">
+									<a href="#" class="link link_type-1 countdown__button-restart">
+										Отправить код повторно
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form__item form__item_email validation">
+						<div class="field-form form__field">
+							<input type="email" class="input-text input-text_text-bold field-form__input-text" placeholder="Ваш e-mail" data-validation-type="email" />
+						</div>
+						<div class="form__item-info form__item-info_error u-text-left">
+							Неверный формат e-mail
+						</div>
+					</div>
+
+					<div class="form__item form__item_name">
+						<div class="field-form form__field">
+							<input type="text" class="input-text field-form__input-text" placeholder="Имя" />
+						</div>
+						<div class="form__item-info form__item-info_error">
+							Заполните поле
+						</div>
+					</div>
+
+					<div class="form__item form__item_surname">
+						<div class="field-form form__field">
+							<input type="text" class="input-text field-form__input-text" placeholder="Фамилия" />
+						</div>
+						<div class="form__item-info form__item-info_error">
+							Заполните поле
+						</div>
+					</div>
+
+					<div class="form__item form__item_padding-1 form__item_text-left">
+						<label class="input-button input-button_type-1">
+							<input type="checkbox" class="input-button__input" checked />
+							<span class="input-button__icon"></span>
+							<span class="input-button__text">
+								Хочу получать рассылку о новинках, брендах и трендах мира моды
+							</span>
+						</label>
+					</div>
+
+					<div class="form__item form__item_text-left validation validation_checkbox">
+						<label class="input-button input-button_type-1">
+							<input type="checkbox" class="input-button__input" checked />
+							<span class="input-button__icon"></span>
+							<span class="input-button__text">
+								Нажимая на кнопку, Вы даете согласие на обработку своих персональных данных в соответствии с <a href="#">условиями соглашения</a>
+								<span class="form__item-info form__item-info_margin-1 form__item-info_error">
+									Необходимо дать согласие на обработку персональных данных
+								</span>
+							</span>
+						</label>
+					</div>
+
+					<div class="form__item form__item_padding-1">
+						<button type="submit" class="button-b button-b_padding-1 button-b_width-full">
+							Зарегистрироваться
+						</button>
+					</div>
+
+					<div class="form__info form__info_margin-1">
+						<a href="#" class="link_type-1 form__link authorization__form-link authorization__form-link_to-login">
+							Вход
+						</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<button type="button" class="popup__button-close" data-popup-trigger="close">
+			<svg class="icon popup__button-close-icon"><use xlink:href="images/icons/icons.svg#icon-cross"></use></svg>
+		</button>
+	</div>
+</div>

@@ -1,0 +1,21 @@
+.menu-b {display: flex;}
+.menu-b__inner {position: relative;}
+.menu-b__inner:before {content: ''; display: block; width: 100%; height: 100%; position: absolute; top: 0; left: 0; border: 1px solid #D0D0D0; border-radius: 4px;}
+.menu-b__list {display: flex; flex-wrap: wrap; }
+.menu-b__item {background: none; font-size: 14px; color: var(--color-default); padding: 8px 12px; text-decoration: none; border: 1px solid transparent; position: relative; border-radius: 4px;}
+.menu-b__item:hover {color: var(--color-brand); text-decoration: none; }
+.menu-b__item.active {color: var(--color-brand); text-decoration: none; border-color: var(--color-brand);}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+	.menu-b__inner {max-width: 100%;}
+	.menu-b__list {flex-wrap: nowrap; overflow: auto; }
+	.menu-b__item {white-space: nowrap;}
+}
+
+@media only screen and (max-width: 767px) {
+
+}

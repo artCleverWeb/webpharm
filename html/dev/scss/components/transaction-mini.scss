@@ -1,0 +1,27 @@
+.transaction-mini {display: flex; flex-direction: column; padding: 15px 16px; border: 1px solid #F0F0F0; color: inherit; text-decoration: none;}
+.transaction-mini__grid_1 {display: flex; justify-content: space-between; gap: 0 20px;}
+.transaction-mini__grid_1 > .transaction-mini__grid-item {}
+.transaction-mini__grid_1 > .transaction-mini__grid-item_1 {display: flex; flex-direction: column; gap: 8px 0;}
+.transaction-mini__grid_1 > .transaction-mini__grid-item_2 {text-align: right; min-width: 20%;}
+.transaction-mini__title {}
+.transaction-mini__number {display: flex; align-items: center; gap: 0 4px; color: #3BB35D; }
+.transaction-mini__number-icon {flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: currentColor; border-radius: 50%; transform: rotate(90deg);}
+.transaction-mini__number-icon-canvas {width: 12px; height: 12px; color: #fff; }
+.transaction-mini__number-value {}
+.transaction-mini__date {font-size: 12px; opacity: 0.5;}
+.transaction-mini_plus {}
+.transaction-mini_minus .transaction-mini__number {color: #DE4141;}
+.transaction-mini_minus .transaction-mini__number-icon {transform: rotate(270deg);}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.transaction-mini__grid_1 {flex-direction: column; gap: 8px 0;}
+	.transaction-mini__grid_1 > .transaction-mini__grid-item_2 {text-align: inherit; min-width: 0;}
+}
