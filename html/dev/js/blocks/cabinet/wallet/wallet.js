@@ -78,7 +78,7 @@ $(function() {
             transactions.loadTransactions();
         }
 
-        $(window).on('mousewheel', () => {
+        $(window).on('scroll mousewheel', (event) => {
             if (transactions.canLoadTransactions()) {
                 transactions.loadTransactions();
             }

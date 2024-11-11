@@ -42,7 +42,7 @@ $(function() {
             journal.loadPosts();
         }
 
-        $(window).on('scroll', () => {
+        $(window).on('scroll mousewheel', () => {
             if (journal.$list.length && journal.autoload && journal.isEndOfList() && !journal.$el.hasClass('loading')) {
                 journal.loadPosts();
             }

@@ -44,7 +44,7 @@ $(function() {
             events.loadPosts();
         }
 
-        $(window).on('scroll', () => {
+        $(window).on('scroll mousewheel', () => {
             if (events.$list.length && events.autoload && events.isEndOfList() && !events.$el.hasClass('loading')) {
                 events.loadPosts();
             }
