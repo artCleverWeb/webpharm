@@ -115,7 +115,7 @@ class Money
             }
         }
 
-        return $this->getEntity()->add([
+        $result =  $this->getEntity()->add([
                 'UF_DATE' => \ConvertTimeStamp(false, 'FULL'),
                 'UF_ENTYTI_ID' => $this->entityId,
                 'UF_TYPE' => $this->entityType,
@@ -125,6 +125,43 @@ class Money
                 'UF_USER_ID' => $this->userId,
                 'UF_DESCRIPTION' => $comment,
             ]) > 0;
+
+        if($result) {
+            $this->updateUserBalance();
+        }
+
+        return false;
+    }
+
+    public function updateUserBalance(): void
+    {
+        if ($this->taxType < 1) {
+            throw new \ErrorException("Не верный идентификатор типа валюты");
+        }
+
+        if ($this->userId < 0) {
+            throw new \ErrorException("Не верный идентификатор пользователя");
+        }
+
+        $sum = $this->getEntity()->getRow([
+                'filter' => [
+                    'UF_USER_ID' => $this->userId,
+                    'UF_TAX' => $this->taxType,
+                ],
+                'runtime' => [
+                    new \Bitrix\Main\Entity\ExpressionField(
+                        'SUM',
+                        'SUM(%s)',
+                        ['UF_DENIMINATION']
+                    ),
+                ],
+                'select' => ['SUM'],
+            ])['SUM'] ?? 0;
+
+        $classUser = new \CUser();
+        $classUser->Update($this->userId, [
+            $this->taxType == self::taxRouble ? 'UF_MONEY' : 'UF_POINTS' => $sum,
+        ]);
     }
 
     public function getCount(bool $includeUserId = true): int
@@ -135,10 +172,10 @@ class Money
             'UF_TAX' => $this->taxType,
         ];
 
-        if($includeUserId === true){
+        if ($includeUserId === true) {
             $filter['UF_USER_ID'] = $this->userId;
         }
-        
+
         return $this->getEntity()->getCountRow($filter) ?? 0;
     }
 

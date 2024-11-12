@@ -90,7 +90,7 @@ class UserResult
         $this->calculateBalance($data, $id);
     }
 
-    public function calculateBalance(array $data, int $id): bool
+    private function calculateBalance(array $data, int $id): bool
     {
         $testEntity = new Test();
         $testEntity->setTestId($data['UF_TEST_ID']);
