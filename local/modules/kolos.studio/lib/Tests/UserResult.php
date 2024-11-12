@@ -3,6 +3,7 @@
 namespace Kolos\Studio\Tests;
 
 use Kolos\Studio\Helpers\HighloadBlock;
+use \Kolos\Studio\Money\Money;
 
 class UserResult
 {
@@ -27,7 +28,7 @@ class UserResult
 
         return $this->entity;
     }
-    
+
     public function getDetailResult(): array
     {
         $result = $this->getLastResult();
@@ -37,8 +38,8 @@ class UserResult
             $result['answers'] = $this->getResultEntity()->getAnswers();
             foreach ($result['questions']['questions'] as &$question) {
                 $question['answers'] = $result['questions']['answers'][$question['ID']];
-                foreach($question['answers'] as &$answer){
-                    if($answer['ID'] == $result['answers'][$question['ID']]){
+                foreach ($question['answers'] as &$answer) {
+                    if ($answer['ID'] == $result['answers'][$question['ID']]) {
                         $answer['IS_SELECTED'] = true;
                     }
                 }
@@ -77,14 +78,75 @@ class UserResult
         $this->deactivateOldResult();
         $percent = $this->calculateResult();
 
-        $this->getEntity()->add(
-            [
-                'UF_USER_ID' => $this->userId,
-                'UF_TEST_ID' => $this->testId,
-                'UF_CORRECT' => $percent,
-                'UF_ACTIVE' => 1,
-            ]
-        );
+        $data = [
+            'UF_USER_ID' => $this->userId,
+            'UF_TEST_ID' => $this->testId,
+            'UF_CORRECT' => $percent,
+            'UF_ACTIVE' => 1,
+        ];
+
+        $id = $this->getEntity()->add($data);
+
+        $this->calculateBalance($data, $id);
+    }
+
+    public function calculateBalance(array $data, int $id): bool
+    {
+        $testEntity = new Test();
+        $testEntity->setTestId($data['UF_TEST_ID']);
+        $testInfo = $testEntity->getInfo();
+
+        if ($id < 1) {
+            return false;
+        }
+
+        if (count($testInfo) < 0) {
+            return false;
+        }
+
+        if ($testInfo['UF_COMPLETED_SCORE'] > $data['UF_CORRECT']) {
+            return false;
+        }
+
+        $moneyEntity = new Money();
+        $moneyEntity->setEntityType(Money::entityCourse);
+        $moneyEntity->setDirectionType(Money::directionCredit);
+        $moneyEntity->setTaxType(Money::taxPoints);
+        $moneyEntity->setEntityId($data['UF_TEST_ID']);
+        $moneyEntity->setUserId($data['UF_USER_ID']);
+
+        $resultPoints = $moneyEntity->store($testInfo['UF_POINTS']);
+        $resultMoney = false;
+
+        if ($testInfo['UF_MONEY'] > 0) {
+            $moneyEntity->setTaxType(Money::taxRouble);
+
+            if ($testInfo['UF_COUNT_PEOPLE'] > 0) {
+                $count = $moneyEntity->getCount(false);
+                echo $count;
+                if ($count < $testInfo['UF_COUNT_PEOPLE']) {
+                    $resultMoney = $moneyEntity->store($testInfo['UF_MONEY']);
+                }
+            } else {
+                $resultMoney = $moneyEntity->store($testInfo['UF_MONEY']);
+            }
+        }
+
+        if ($resultMoney || $resultPoints) {
+            $update = [];
+
+            if($resultMoney){
+                $update['UF_ADD_MONEY'] = 1;
+            }
+
+            if($resultPoints){
+                $update['UF_ADD_POINTS'] = 1;
+            }
+
+            $this->getEntity()->update($id, $update);
+        }
+
+        return true;
     }
 
     private function calculateResult(): int
@@ -106,8 +168,8 @@ class UserResult
             }
         }
 
-        $percent = (($correctAnswer - $allQuestions) / $allQuestions ) * 100;
-        $percent = 100 - ( $percent > 0 ? $percent : 0 - $percent);
+        $percent = (($correctAnswer - $allQuestions) / $allQuestions) * 100;
+        $percent = 100 - ($percent > 0 ? $percent : 0 - $percent);
 
         return round($percent);
     }
