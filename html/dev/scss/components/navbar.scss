@@ -1,0 +1,40 @@
+.navbar {width: 72px; height: 100%; background: var(--color-dark); font-family: Rubik, sans-serif; font-size: 16px; color: #D1D1D1; overflow: hidden; position: fixed; top: 0; left: 0; transition: width 0.3s ease; z-index: 100;}
+.navbar__data {display: flex; flex-direction: column; width: 348px; height: 100%; padding: 16px 8px; overflow: auto;}
+.navbar__logo {margin-bottom: 38px;}
+.navbar__user {display: none;}
+.navbar__menu {}
+.navbar__footer {margin-top: auto; padding-top: 38px;}
+.navbar__header {display: none; }
+.navbar__header-cnt {}
+.navbar__header-logo {white-space: nowrap; font-size: 16px; line-height: 1.2; color: #fff; text-align: center; text-decoration: none; position: relative;}
+.navbar__button-toggle {display: flex; flex-direction: column; justify-content: center; align-items: stretch; gap: 2px 0; width: 20px; height: 20px; background: none; border: 0; padding: 0; color: #fff;}
+.navbar__button-toggle-line {background: currentColor; height: 2px; border-radius: 1px; position: relative; transition: all 0.3s ease;}
+.navbar__notices {}
+.navbar__grid_1 {display: flex; align-items: center; }
+.navbar__grid_1 > .navbar__grid-item {flex-shrink: 0; flex-grow: 0; }
+.navbar__grid_1 > .navbar__grid-item_1 {width: 50%;}
+.navbar__grid_1 > .navbar__grid-item_2 {width: 0; display: flex; justify-content: center;}
+.navbar__grid_1 > .navbar__grid-item_3 {width: 50%; display: flex; justify-content: flex-end;}
+.navbar.expanded {width: 348px;}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+	.navbar {width: 100%; height: auto; position: sticky; top: 0; left: 0; --navbar-height: 72px; transition: none; overflow: visible;}
+	.navbar__header {display: block; }
+	.navbar__user {display: flex; margin-top: -8px; margin-bottom: 20px;}
+	.navbar__logo {display: none;}
+	.navbar__data {background: var(--color-dark); position: fixed; top: var(--navbar-height); left: -100%; width: 100%; height: calc(100% - var(--navbar-height)); padding: 24px 16px; border-top: 1px solid rgba(255,255,255, 0.1); opacity: 0; visibility: hidden; transition: all 0.3s ease;}
+	.navbar__grid_1 {height: var(--navbar-height);}
+	.navbar.expanded {width: 100%;}
+	.navbar.expanded .navbar__data {left: 0; opacity: 1; visibility: visible;}
+	.navbar.expanded .navbar__button-toggle-line:nth-child(1) {transform: rotate(45deg); top: 4px; }
+	.navbar.expanded .navbar__button-toggle-line:nth-child(2) {opacity: 0;}
+	.navbar.expanded .navbar__button-toggle-line:nth-child(3) {transform: rotate(-45deg); top: -4px;}
+}
+
+@media only screen and (max-width: 767px) {
+
+}

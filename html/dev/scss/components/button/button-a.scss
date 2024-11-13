@@ -1,0 +1,15 @@
+.button-a {display: inline-block; background: rgba(222,65,65, 1); border: 0; color: #fff; font-size: 16px; font-weight: 500; line-height: 1.333; padding: 10px 24px; text-align: center; text-decoration: none; border-radius: 16px;}
+.button-a:hover {background: rgba(222,65,65, 0.1); color: var(--color-brand); text-decoration: none;}
+
+.button-a_bg-1 {background: rgba(222,65,65, 0.1); color: var(--color-brand); }
+.button-a_bg-1:hover {background: rgba(222,65,65, 1); color: #fff;}
+
+.button-a_bg-2 {background: rgba(255,255,255, 1); color: var(--color-brand); }
+.button-a_bg-2:hover {background: rgba(222,65,65, 1); color: #fff;}
+
+.button-a_bg-3 {background: none; color: #8A8989; }
+.button-a_bg-3:hover {background: none; color: var(--color-brand);}
+
+.button-a_size-1 {padding-top: 17px; padding-bottom: 17px;}
+
+.button-a_wide {width: 100%;}

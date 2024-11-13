@@ -1,0 +1,17 @@
+.events {}
+.events__header {}
+
+.events_sidebar {}
+.events_sidebar .events__header {margin-bottom: 16px;}
+
+@media only screen and (max-width: 1239px) {
+	.events_sidebar .post-mini-a {padding: 20px 44px 20px 20px;}
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+
+}

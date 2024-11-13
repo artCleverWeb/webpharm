@@ -1,0 +1,11 @@
+.popup-authorization {}
+.popup-authorization__form {}
+.popup-authorization__step {display: none;}
+.popup-authorization__step.active {display: block;}
+.popup-authorization__step_login {}
+.popup-authorization__step_login .popup__title {font-size: 45px;}
+.popup-authorization__step_code {}
+
+@media only screen and (max-width: 767px) {
+	.popup-authorization .popup__data {padding-left: 20px; padding-right: 20px;}
+}

@@ -1,0 +1,9 @@
+.input-button-a {display: flex; align-items: center; gap: 0 19px; position: relative; cursor: pointer;}
+.input-button-a__input {position: absolute; top: 0; left: -10000px; opacity: 0;}
+.input-button-a__icon {flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 48px; height: 26px; background: #7F7F7F; border-radius: 13px; position: relative;}
+.input-button-a__icon:after {content: ''; display: block; width: 22px; height: 22px; background: #fff; position: absolute; top: 2px; left: 2px; border-radius: 50%; transition: left 0.3s ease;}
+.input-button-a__text {}
+.input-button-a__input:checked {}
+.input-button-a__input:checked ~ .input-button-a__icon {background: #DE4141;}
+.input-button-a__input:checked ~ .input-button-a__icon:after {left: 24px;}
+.input-button-a:has(.input-button-a__input:disabled) {cursor: default;}

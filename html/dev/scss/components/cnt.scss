@@ -1,0 +1,13 @@
+.cnt {width: 100%; max-width: 1420px; padding-left: 28px; padding-right: 28px; margin: 0 auto; }
+
+@media only screen and (max-width: 1239px) {
+	.cnt {padding-left: 20px; padding-right: 20px; }
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.cnt {padding-left: 16px; padding-right: 16px; }
+}

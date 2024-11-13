@@ -1,0 +1,23 @@
+.u-text-center {text-align: center;}
+.u-text-left {text-align: left;}
+
+.u-margin-1 {margin-bottom: 40px;}
+.u-margin-2 {margin-bottom: 80px;}
+
+.u-scroll-lock {overflow: hidden;}
+
+.u-hidden {display: none;}
+
+.u-sm-visible {display: none;}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+	.u-md-hidden {display: none;}
+}
+
+@media only screen and (max-width: 767px) {
+	.u-sm-visible {display: block;}
+}

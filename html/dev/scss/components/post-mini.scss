@@ -1,0 +1,46 @@
+.post-mini {flex-grow: 1; display: flex; flex-direction: column; min-height: 208px; color: var(--color-default); text-decoration: none; background: #FDF2F2; border: 1px solid #FDF2F2; line-height: 1.33; padding: 23px 23px; border-radius: 16px; transition: all 0.3s ease;}
+.post-mini__icon {background: #DE4141; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; color: #fff; border-radius: 4px;}
+.post-mini__icon-canvas {width: 24px; height: 24px;}
+.post-mini__head {display: flex; justify-content: space-between; align-items: center; gap: 10px 8px; margin-bottom: 16px; }
+.post-mini__data {margin-top: auto;}
+.post-mini__time {background: #fff; padding: 3px 7px 4px; font-size: 14px; border-radius: 4px;}
+.post-mini__time-detail {}
+.post-mini__title {font-size: 18px; hyphens: auto;}
+.post-mini__category {font-size: 14px; margin-bottom: 8px;}
+.post-mini__category_color-1 {color: #9E9E9E;}
+.post-mini:hover {background: #fff; border-color: #DE4141; text-decoration: none;}
+.post-mini_bg-1 {background: #F5FDF2; border-color: #F5FDF2;}
+.post-mini_bg-1 .post-mini__icon {background: #3BB35D;}
+.post-mini_bg-1:hover {background: #fff; border-color: #3BB35D;}
+.post-mini_bg-2 {background: #ebf7f6; border-color: #ebf7f6;}
+.post-mini_bg-2 .post-mini__icon {background: #33AD9E;}
+.post-mini_bg-2:hover {background: #fff; border-color: #33AD9E;}
+.post-mini_bg-3 {background: #eeecf8; border-color: #eeecf8;}
+.post-mini_bg-3 .post-mini__icon {background: #533bb3;}
+.post-mini_bg-3:hover {background: #fff; border-color: #533bb3;}
+.post-mini_bg-4 {background: #ecf3ff; border-color: #ecf3ff;}
+.post-mini_bg-4 .post-mini__icon {background: #3b82f6;}
+.post-mini_bg-4:hover {background: #fff; border-color: #3b82f6;}
+.post-mini_bg-5 {background: #EAF6F5; border-color: #EAF6F5;}
+.post-mini_bg-5 .post-mini__icon {background: #3B82F6;}
+.post-mini_bg-5:hover {background: #fff; border-color: #33AD9E;}
+.post-mini_bg-6 {background: #FBF5FE; border-color: #FBF5FE;}
+.post-mini_bg-6 .post-mini__icon {background: #AF3BF6;}
+.post-mini_bg-6:hover {background: #fff; border-color: #AF3BF6;}
+.post-mini_type-1 {min-height: 0;}
+
+@media only screen and (max-width: 1239px) {
+	.post-mini__title {font-size: 16px; }
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.post-mini {min-height: 200px; padding: 16px 16px; line-height: 1.4;}
+	.post-mini__category {font-size: 13px;}
+	.post-mini__time {padding: 3px 4px; font-size: 13px; }
+	.post-mini_type-1 {min-height: 0;}
+
+}

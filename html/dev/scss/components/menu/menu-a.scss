@@ -1,0 +1,18 @@
+.menu-a {text-align: center;}
+.menu-a__text {margin-bottom: 34px;}
+.menu-a__list {display: flex; flex-direction: column; gap: 34px 0;}
+.menu-a__item {font-size: 16px; font-weight: 500; }
+.menu-a__item-link {}
+.menu-a__item-link:hover {}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.menu-a__list {gap: 16px 0;}
+}
