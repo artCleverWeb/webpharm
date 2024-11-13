@@ -27,6 +27,10 @@ $(function() {
         sidebar.calculateBackgroundWidth();
     });
 
+    $(window).on('scroll mousewheel', function() {
+        sidebar.calculateBackgroundWidth();
+    });
+
     /*
         Progress
     */

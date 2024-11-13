@@ -25,6 +25,7 @@ const pages = [
     'cabinet-user-change.html',
     'cabinet-wallet.html',
     'search.html',
+    'testing.html',
 ];
 
 var plugins = [
@@ -133,6 +134,12 @@ module.exports = {
         port: 3000,
         open: true,
         hot: true,
+        devMiddleware: {
+            // writeToDisk: true // в режиме разработки файлы записываются на диск (true) или находятся в памяти (false)
+            writeToDisk: (filePath) => {
+              return !/hot-update/i.test(filePath); // you can change it to whatever you need
+            },
+        },
     },
     optimization: {
         runtimeChunk: 'single',

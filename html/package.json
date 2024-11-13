@@ -33,6 +33,7 @@
         "webpack-dev-server": "^4.11.1"
     },
     "dependencies": {
+        "@hotwired/stimulus": "^3.2.2",
         "daterangepicker": "^3.1.0",
         "imagesloaded": "^5.0.0",
         "imask": "^7.6.0",

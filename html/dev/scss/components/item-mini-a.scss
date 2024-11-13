@@ -2,9 +2,10 @@
 .item-mini-a__icon {background: #DE4141; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; color: #fff; margin-bottom: 16px; border-radius: 4px;}
 .item-mini-a__icon-canvas {width: 24px; height: 24px;}
 .item-mini-a__data {}
-.item-mini-a__title {font-size: 16px; hyphens: auto;}
+.item-mini-a__title {font-size: 16px; hyphens: auto; transition: all 0.3s ease;}
 .item-mini-a__number {font-size: 24px; font-weight: 500; font-family: Rubik, sans-serif; line-height: 1; margin-top: auto; padding-top: 10px;}
-.item-mini-a:hover {background: #fff; border-color: #DE4141; text-decoration: none;}
+a.item-mini-a:hover {text-decoration: none;}
+a.item-mini-a:hover .item-mini-a__title {color: var(--color-brand);}
 .item-mini-a__icon_bg-1 {background: #3BB35D;}
 .item-mini-a__icon_bg-2 {background: #F8BF2D;}
 .item-mini-a__icon_bg-3 {background: #33AD9E;}

@@ -1,5 +1,5 @@
 .post-mini-a {display: flex; flex-direction: column; gap: 8px 0; color: var(--color-default); text-decoration: none; background: #fff; line-height: 1.25; padding: 24px 44px 24px 24px; border-radius: 24px; position: relative;}
-.post-mini-a__title {font-family: Rubik, sans-serif; font-size: 16px; hyphens: auto;}
+.post-mini-a__title {font-family: Rubik, sans-serif; font-size: 16px; hyphens: auto; transition: all 0.3s ease;}
 .post-mini-a__info {font-size: 0;}
 .post-mini-a__info-item {display: inline; font-size: 14px; margin-right: 10px; color: #9E9E9E; position: relative;}
 .post-mini-a__info-item:after {content: ''; display: inline-block; vertical-align: top; width: 4px; height: 4px; background: currentColor; border-radius: 50%; margin: 0 0 0 7px; position: relative; top: 0.5em;}
@@ -12,6 +12,7 @@
 .post-mini-a__button-arrow {display: flex; border: 0; background: none; padding: 0; position: absolute; top: 50%; right: 20px; margin-top: -7px; color: #9E9E9E;}
 .post-mini-a__button-arrow-icon {width: 14px; height: 14px;}
 a.post-mini-a:hover {text-decoration: none;}
+a.post-mini-a:hover .post-mini-a__title {color: var(--color-brand);}
 
 @media only screen and (max-width: 1239px) {
 
