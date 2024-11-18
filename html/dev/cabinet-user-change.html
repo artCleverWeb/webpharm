@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+@require('parts/head.html')
+
+<body>
+	<div class="page">
+		@require('parts/navbar/navbar_employee-experienced.html')
+		<div class="cnt page__cnt">
+			<div class="grid grid_layout">
+				<div class="grid__item grid__item_1">
+					<div class="content">
+						<div class="cabinet">
+							<div class="header content__header">
+								<div class="headline">
+									<h1 class="title title_size-1 headline__title">
+										<a href="#" class="title__data title__data_link">
+											<svg class="icon title__arrow title__arrow_type-1"><use xlink:href="images/icons/icons.svg#icon-arrow-2"></use></svg>
+											<span class="title__text">
+												Изменение данных
+											</span>
+										</a>
+									</h1>
+								</div>
+							</div>
+							<div class="user-data cabinet__user-data js-user-data">
+								<form action="#" class="form user-data__form">
+									<div class="form__section user-data__section">
+										<div class="form__grid form__grid_1">
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__avatar">
+														<div class="form__avatar-picture">
+															<picture>
+																<img src="upload/images/8-1.jpg" alt="" class="form__avatar-picture-img">
+															</picture>
+															<input name="userData[photo]" type="file" accept="image/jpeg,image/png,image/gif" class="form__avatar-picture-input">
+														</div>
+														<a href="#" class="form__avatar-button-change">
+															Изменить фотографию
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="form__section-header user-data__section-header">
+											<div class="title form__section-title user-data__section-title">
+												Профиль
+											</div>
+										</div>
+										<div class="form__grid form__grid_1">
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item"> <!-- form__item invalid -->
+													<div class="form__caption">
+														Имя
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[name]" type="text" class="input-text field-form__input-text" value="Михаил" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Фамилия
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[surname]" type="text" class="input-text field-form__input-text" value="Иванов" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form__section user-data__section">
+										<div class="form__section-header user-data__section-header">
+											<div class="title form__section-title user-data__section-title">
+												Контакты
+											</div>
+										</div>
+										<div class="form__grid form__grid_1">
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Телефон
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[phone]" type="tel" class="input-text field-form__input-text" value="+7 (921) 633-20-05" placeholder="+7 (9 -- ) --- -- --" data-mask="+7 (000) 000-00-00" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														E-mail
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[email]" type="email" class="input-text field-form__input-text" value="m.ivanov@yandex.ru" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Сертификат
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[certificate]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form__section user-data__section">
+										<div class="form__section-header user-data__section-header">
+											<div class="title form__section-title user-data__section-title">
+												Зачетные единицы (ЗЕТ)/баллы/кредиты/часы
+											</div>
+										</div>
+										<div class="form__grid form__grid_1">
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-12 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Баллы по сертификатам
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[ballsCertificate]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-8 form__grid-item_lg-w-12 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Баллы за участие в конференциях, вебинарах и др.
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[ballsParticipation]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form__info form__info_size-1 form__info_margin-1">
+											Если баллов пока нет, укажите 0
+										</div>
+									</div>
+
+									<div class="form__section user-data__section">
+										<div class="form__section-header user-data__section-header">
+											<div class="title form__section-title user-data__section-title">
+												Сертификат специалиста
+											</div>
+										</div>
+										<div class="form__grid form__grid_1">
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Номер
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[certificateNumber]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Регистрационный номер
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[certificateNumberRegister]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Город
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[certificateCity]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Действителен до
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[certificateDate]" type="text" class="input-text field-form__input-text" value="" placeholder="" data-mask="00.00.0000" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Кем выдан
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[certificateOrganization]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Специальность
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[certificateSpecialization]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form__section user-data__section">
+										<div class="form__section-header user-data__section-header">
+											<div class="title form__section-title user-data__section-title">
+												Свидетельство об аккредитации специалиста
+											</div>
+										</div>
+										<div class="form__grid form__grid_1">
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Номер
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[accreditationNumber]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Действительно до
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[accreditationDate]" type="text" class="input-text field-form__input-text" value="" placeholder="" data-mask="00.00.0000" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Кем выдано
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[accreditationOrganization]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+											<div class="form__grid-item form__grid-item_w-4 form__grid-item_lg-w-6 form__grid-item_sm-w-12">
+												<div class="form__item">
+													<div class="form__caption">
+														Специальность
+													</div>
+													<div class="field-form form__field-form">
+														<input name="userData[accreditationSpecialization]" type="text" class="input-text field-form__input-text" value="" placeholder="" />
+													</div>
+													<div class="form__info form__info_error">
+														Поле заполнено неверно
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form__footer">
+										<div class="form__grid form__grid_2">
+											<div class="form__grid-item">
+												<button type="submit" class="button-a button-a_size-1 form__button form__button_save">
+													Сохранить
+												</button>
+											</div>
+											<div class="form__grid-item">
+												<button class="button-a button-a_bg-1 button-a_size-1 form__button form__button_reset">
+													Отменить
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="grid__item grid__item_2">
+					@require('parts/sidebar/sidebar_cabinet.html')
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+.breadcrumbs {color: #9E9E9E; margin-top: 8px;}
+.breadcrumbs__list {font-size: 0;}
+.breadcrumbs__item {display: inline; font-size: 14px; color: inherit; text-decoration: none;}
+a.breadcrumbs__item:hover {color: var(--color-brand); text-decoration: none;}
+.breadcrumbs__separator {display: inline; font-size: 14px; margin: 0 4px;}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.breadcrumbs__list {white-space: nowrap; overflow: auto; padding: 0 16px 6px; margin: 0 -16px -6px;}
+}

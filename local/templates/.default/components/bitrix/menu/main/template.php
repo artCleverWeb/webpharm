@@ -13,9 +13,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         <?php
         foreach ($arResult as $item): ?>
             <?php
-            if ($arParams['EXTENDED_MODE'] != 1 && !is_null(
+            if (($arParams['EXTENDED_MODE'] != 1 && !is_null(
                     $item['PARAMS']['is_extended']
-                ) && $item['PARAMS']['is_extended'] == 1) {
+                ) && $item['PARAMS']['is_extended'] == 1) ||
+                $arParams['EXTENDED_MODE'] == 1 && !is_null(
+                    $item['PARAMS']['is_not_extended']
+                ) && $item['PARAMS']['is_not_extended'] == 1
+            ) {
                 continue;
             }
             ?>

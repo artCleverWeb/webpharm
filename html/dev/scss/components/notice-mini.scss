@@ -1,0 +1,17 @@
+.notice-mini {background: #F7F7F7; padding: 24px 24px; border-radius: 16px; }
+.notice-mini p {margin-bottom: 16px;}
+.notice-mini p:last-child {margin-bottom: 0;}
+
+.notice-mini_bg-1 {background: rgba(var(--color-brand-rgb), 0.1);}
+
+@media only screen and (max-width: 1239px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+	.notice-mini {padding: 16px 16px;}
+}

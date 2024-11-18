@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+@require('parts/head.html')
+
+<body>
+	<div class="page">
+		<div class="cnt page__cnt">
+			<div class="grid grid_layout-1">
+				<div class="grid__item grid__item_1">
+					<div class="authorization js-authorization">
+						<form action="#" class="form authorization__form">
+							<div class="logo-a form__logo">
+								<img src="images/logo-1.png" alt="" class="logo-a__img" />
+							</div>
+							<div class="form__head">
+								<div class="title title_size-2 form__title">
+									Вход
+								</div>
+							</div>
+							<div class="form__fields">
+								<div class="form__item"> <!-- form__item invalid -->
+									<div class="form__caption">
+										Телефон
+									</div>
+									<div class="field-form form__field-form">
+										<input type="text" class="input-text field-form__input-text" placeholder="+7 (9 -- ) --- -- -- " data-mask="+7 (000) 000-00-00" />
+									</div>
+									<div class="form__info form__info_error">
+										Поле заполнено неверно
+									</div>
+								</div>
+								<div class="form__item">
+									<div class="form__caption">
+										Пароль
+									</div>
+									<div class="field-form form__field-form">
+										<input type="password" class="input-text field-form__input-text" placeholder="***********" />
+									</div>
+									<div class="form__info form__info_error">
+										Поле заполнено неверно
+									</div>
+								</div>
+								<div class="form__item form__item_submit">
+									<button type="submit" class="button-a button-a_size-1 button-a_wide form__button-submit">
+										Войти
+									</button>
+								</div>
+								<div class="form__item form__item_submit">
+									<label class="input-button">
+										<input type="checkbox" class="input-button__input" checked />
+										<div class="input-button__icon"></div>
+										<div class="input-button__text">
+											Запомнить меня на этом компьютере
+										</div>
+									</label>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="grid__item grid__item_2">
+					<div class="menu-a">
+						<div class="menu-a__list">
+							<div class="menu-a__item">
+								<a href="#" class="link link_type-1 link_color-1 menu-a__item-link">
+									Восстановить пароль
+								</a>
+							</div>
+							<div class="menu-a__item">
+								<a href="#" class="link link_type-1 link_color-1 menu-a__item-link">
+									Изменился номер телефона?
+								</a>
+							</div>
+							<div class="menu-a__item">
+								<a href="registration.html" class="link link_type-1 link_color-1 menu-a__item-link">
+									Зарегистрироваться
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

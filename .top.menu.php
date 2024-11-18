@@ -4,7 +4,7 @@ $aMenuLinks = Array(
 		"Как начать работать", 
 		"/courses/start-working/", 
 		Array(), 
-		Array("icon"=>"icon-study"), 
+		Array("icon"=>"icon-study", "is_not_extended"=>"1"),
 		"" 
 	),
 	Array(

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+@require('parts/head.html')
+
+<body>
+	<div class="page">
+		@require('parts/navbar/navbar_employee-experienced.html')
+		<div class="cnt page__cnt">
+			<div class="grid grid_layout">
+				<div class="grid__item grid__item_1">
+					<div class="content">
+						<div class="cabinet">
+							<div class="header content__header">
+								<div class="headline">
+									<h1 class="title title_size-1 headline__title">
+										Личный кабинет
+									</h1>
+								</div>
+							</div>
+							<div class="user-card cabinet__user-card">
+								<div class="person-mini user-card__view">
+									<div class="person-mini__grid person-mini__grid_1">
+										<div class="person-mini__grid-item person-mini__grid-item_1">
+											<div class="person-mini__picture">
+												<picture>
+													<source media="(max-width: 767px)" srcset="upload/images/mobile/8-1.webp" type="image/webp">
+													<source srcset="upload/images/webp/8-1.webp, upload/images/2x/webp/8-1.webp 2x" type="image/webp">
+													<img src="upload/images/8-1.jpg" srcset="upload/images/2x/8-1.jpg 2x" alt="" class="person-mini__picture-img" width="136" height="136">
+												</picture>
+											</div>
+										</div>
+										<div class="person-mini__grid-item person-mini__grid-item_2">
+											<div class="person-mini__name">
+												Михаил Иванов
+											</div>
+											<div class="person-mini__contacts">
+												<div class="person-mini__contacts-list">
+													<a href="tel:+79214932452" class="person-mini__contacts-item">
+														<div class="person-mini__contacts-item-icon">
+															<svg class="icon person-mini__contacts-item-icon-canvas"><use xlink:href="images/icons/icons.svg#icon-phone"></use></svg>
+														</div>
+														<div class="person-mini__contacts-item-text">
+															+7 (921) 493-24-52
+														</div>
+													</a>
+													<a href="mailto:m.ivanov@yandex.ru" class="person-mini__contacts-item">
+														<div class="person-mini__contacts-item-icon">
+															<svg class="icon person-mini__contacts-item-icon-canvas"><use xlink:href="images/icons/icons.svg#icon-email"></use></svg>
+														</div>
+														<div class="person-mini__contacts-item-text">
+															m.ivanov@yandex.ru
+														</div>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="person-mini__grid-item person-mini__grid-item_3">
+											<a href="#" class="button-a button-a_bg-2 button-a_size-1 person-mini__button person-mini__button_change">
+												Изменить
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="grid__item grid__item_2">
+					@require('parts/sidebar/sidebar_cabinet.html')
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

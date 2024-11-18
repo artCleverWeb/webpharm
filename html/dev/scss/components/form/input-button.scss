@@ -1,0 +1,12 @@
+.input-button {display: flex; gap: 0 12px; position: relative; cursor: pointer;}
+.input-button__input {position: absolute; top: 0; left: -10000px; opacity: 0;}
+.input-button__icon {flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; background: url('../images/icons/icon-check.svg') no-repeat 0 0; position: relative;}
+.input-button__text {}
+.input-button__input:checked {}
+.input-button__input:checked ~ .input-button__icon {background-position: 0 -18px;}
+.input-button__input:disabled ~ .input-button__icon {opacity: 0.4;}
+.input-button__input:disabled ~ .input-button__text {opacity: 0.4;}
+.input-button__input[type="radio"] {}
+.input-button__input[type="radio"] ~ .input-button__icon {}
+.input-button__input[type="radio"]:checked ~ .input-button__icon {background-position: -18px -18px;}
+.input-button:has(.input-button__input:disabled) {cursor: default;}
