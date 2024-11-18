@@ -66,6 +66,18 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                                 Поле заполнено неверно
                             </div>
                         </div>
+                        <div class="form__item" v-if="showBtn">
+                            <div class="form__caption">
+                                ФИО
+                            </div>
+                            <div class="field-form form__field-form">
+                                <input type="text" name="fio" class="input-text field-form__input-text" v-model="fio"
+                                       @input="changeFio">
+                            </div>
+                            <div class="form__info form__info_error">
+                                Поле заполнено неверно
+                            </div>
+                        </div>
                         <div v-if="showTimerNeed">Показывать таймер</div>
                         <div class="form__item form__item_submit" v-if="showBtnSendSms">
                             <button type="submit" name="send" value="Y"
@@ -133,9 +145,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                             </a>
                         </div>
                         <div class="form__item">
-                            <a href="/journal/" class="button-a button-a_size-1 button-a_wide"
-                               @click="setUserState($event)" data-state="true">
-                                Опытным сотрудникам
+                            <a href="/journal/" class="button-a button-a_size-1 button-a_wide">
+                                Журнал
                             </a>
                         </div>
                     </div>
@@ -191,6 +202,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 showBtnSendSms: true,
                 showTimerNeed: false,
                 code: "",
+                fio: "",
                 showRegisterForm: true,
                 showPageSecond: false
             }
@@ -211,8 +223,20 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 },
                 set: function (value) {
                     this.code = value
-                    console.log(this.code);
-                    if (this.code.length >= 4) {
+                    if (this.fio.length >= 4 && this.code.length >= 4) {
+                        this.showBtnDisabled = false
+                    } else {
+                        this.showBtnDisabled = true
+                    }
+                }
+            },
+            fio: {
+                get: function () {
+                    return this.fio
+                },
+                set: function (value) {
+                    this.fio = value
+                    if (this.fio.length >= 4 && this.code.length >= 4) {
                         this.showBtnDisabled = false
                     } else {
                         this.showBtnDisabled = true
@@ -221,9 +245,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             }
         },
         watch: {},
-        mounted() {
-
-        },
+        mounted() {},
         methods: {
             setUserState($event) {
                 const state = $event.target.dataset.state
@@ -246,7 +268,17 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 const value = $event.target.value
                 this.code = value
 
-                if (this.code.length >= 4) {
+                if (this.code.length >= 4 && this.fio.length >= 4) {
+                    this.showBtnDisabled = false
+                } else {
+                    this.showBtnDisabled = true
+                }
+            },
+            changeFio($event) {
+                const value = $event.target.value
+                this.fio = value
+
+                if (this.code.length >= 4 && this.fio.length >= 4) {
                     this.showBtnDisabled = false
                 } else {
                     this.showBtnDisabled = true
@@ -261,7 +293,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 $event.preventDefault()
 
                 if (_this.phone.length == 18) {
-                    this.send('checkCode', {mobile: _this.phone, password: _this.code})
+                    this.send('checkCode', {mobile: _this.phone, password: _this.code, fio: _this.fio})
                         .then(function (response) {
                             _this.errors = response.data.errors ?? response.errors ?? {}
 

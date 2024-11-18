@@ -25,3 +25,4 @@ define('HL_TABLE_PHARMACY_CHAIN', 'num_pharmacy_chain'); // Название HL 
 define('HL_TABLE_SMS_LOGS', 'sms_logs'); // Название HL таблицы Логи СМС
 define('HL_TABLE_TESTS_RESULT', 'tests_result'); // HL Блок Результаты тестов
 define('HL_TABLE_TESTS_ACCRUALS', 'test_accruals'); // HL Блок Начисления
+define('HL_TABLE_USER_PROCESS_EDUCATION', 'user_process_education'); // HL Прохождение Обучения

@@ -61,7 +61,7 @@ if (htmlspecialchars($_REQUEST["forgotpasswd"]) == "yes") {
                 CIWebSMS::Send($arUser["LOGIN"], $message);
                 afterSmsSend($arUser["LOGIN"], $message);
             } else {
-                $arResult["ERRORS"][] = "Пользователь с таким телефоном (логином) заблокирован.<br>" .
+                $arResult["ERRORS"][] = "Пользователь не найден.<br>" .
                     "Обратитесь к администратору сайта.";
             }
         } else {

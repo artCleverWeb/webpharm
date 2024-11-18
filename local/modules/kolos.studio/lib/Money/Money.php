@@ -30,6 +30,66 @@ class Money
         $this->entityType = $typeId;
     }
 
+    public function getUserWallet(string $type = 'taxAll', int $page = 1, int $count = 20): array
+    {
+
+        if(defined('self::'. $type)){
+            echo constant('self::'. $type);
+        }
+
+        $return = [];
+
+        if ($this->userId < 1) {
+            return $return;
+        }
+
+        $filter = [
+            'UF_USER_ID' => $this->userId,
+        ];
+
+        if(defined('self::'. $type)){
+            $filter['UF_TAX']  = constant('self::'. $type);
+        }
+
+        $list = $this->getEntity()->find([
+            'filter' => [
+                'UF_USER_ID' => $this->userId,
+            ],
+            'limit' => $count,
+            'offset' => ($count - $count * $page) ?? 0,
+        ]);
+
+        if (count($list) > 0) {
+            $elementIds = array_column($list, 'UF_ENTYTI_ID');
+
+            $elements = [];
+            $elementsObj = \CIBlockElement::GetList(
+                [],
+                ['ID' => $elementIds],
+                false,
+                false,
+                ['ID', 'NAME', 'DETAIL_PAGE_URL']
+            );
+            while ($element = $elementsObj->GetNext()) {
+                $elements[$element['ID']] = $element;
+            }
+
+            foreach ($list as $item) {
+                $return[] = [
+                    'name' => ($item['UF_DIRECTION'] == self::directionDebit ? 'Списание' : "Начисление") .
+                        (isset($elements[$item['UF_ENTYTI_ID']]) ? ' за тест ' . $elements[$item['UF_ENTYTI_ID']]['NAME'] : ''),
+                    'url' => isset($elements[$item['UF_ENTYTI_ID']]) ? $elements[$item['UF_ENTYTI_ID']]['DETAIL_PAGE_URL'] : '',
+                    'value' => $item['UF_DENIMINATION'],
+                    'direction' => $item['UF_DIRECTION'] == self::directionDebit ? 'down' : 'up',
+                    'tax' => $item['UF_TAX'] == self::taxRouble ? 'rub' : 'points',
+                    'date' => $item['UF_DATE'] ? $item['UF_DATE']->format('d.m.Y') : '',
+                ];
+            }
+        }
+
+        return $return;
+    }
+
     public function setDirectionType(int $typeId): void
     {
         if ($typeId != self::directionCredit && $typeId != self::directionDebit) {
@@ -115,7 +175,7 @@ class Money
             }
         }
 
-        $result =  $this->getEntity()->add([
+        $result = $this->getEntity()->add([
                 'UF_DATE' => \ConvertTimeStamp(false, 'FULL'),
                 'UF_ENTYTI_ID' => $this->entityId,
                 'UF_TYPE' => $this->entityType,
@@ -126,7 +186,7 @@ class Money
                 'UF_DESCRIPTION' => $comment,
             ]) > 0;
 
-        if($result) {
+        if ($result) {
             $this->updateUserBalance();
         }
 

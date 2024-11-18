@@ -132,7 +132,7 @@ class UserProfile extends \CBitrixComponent implements Controllerable
 
                         $obNewUser = new CUser;
                         $arNewUser = [
-                            "ACTIVE" => "Y",
+                            "ACTIVE" => "N",
                             "LOGIN" => $arParams["mobile"],
                             "EMAIL" => $arParams["mobile"] . "@mail.crt",
                             "GROUP_ID" => [2, GRID__AUTH_USERS],
@@ -148,7 +148,7 @@ class UserProfile extends \CBitrixComponent implements Controllerable
                             $arResult["errors"][] = $obNewUser->LAST_ERROR;
                         } else {
                             $message = "Логин: " . $arParams["mobile"] . " и пароль: " . $sPasswd . " для " . $_SERVER["HTTP_HOST"];
-                            //CIWebSMS::Send($arParams["mobile"], $message);
+                            // CIWebSMS::Send($arParams["mobile"], $message);
                             afterSmsSend($arParams["mobile"], $message);
                             $arResult["state"] = true;
                         }
@@ -170,6 +170,7 @@ class UserProfile extends \CBitrixComponent implements Controllerable
         try {
             $login = str_replace(['(', ')', '+', '_', '-', ' '], "", $fields["mobile"]);
             $password = $fields["password"];
+            $fio = $fields['fio'];
 
             $arResult["errors"] = [];
 
@@ -180,18 +181,38 @@ class UserProfile extends \CBitrixComponent implements Controllerable
                 $login = CIWebSMS::MakePhoneNumber($fields['mobile']);
             }
 
-            global $USER;
-            $isLogin = $USER->Login($login, $password, 'Y');
+            if (strlen($fio) < 4) {
+                $arResult["errors"][] = "Укажите корректно Ваше ФИО";
+                return AjaxJson::createSuccess($arResult);
+            }
 
-            if ($isLogin !== true) {
-                $arResult["errors"][] = $isLogin['MESSAGE'];
+            if (($itemId = Kolos\Studio\Users\Employee::getByFio($fio)) > 0) {
+                global $USER;
+
+                $arUserId = \Bitrix\Main\UserTable::getRow([
+                    'filter' => [
+                        "=LOGIN" => htmlspecialchars($login),
+                    ],
+                    'select' => [
+                        "ID",
+                    ],
+                ])['ID'];
+
+                Kolos\Studio\Users\Employee::store($arUserId, $itemId);
+
+                $isLogin = $USER->Login($login, $password, 'Y');
+
+                if ($isLogin !== true) {
+                    $arResult["errors"][] = $isLogin['MESSAGE'];
+                } else {
+                    $arResult['state'] = true;
+                }
             }
             else{
-                $arResult['state'] = true;
+                $arResult["errors"][] = 'Пользователь не найден. Обратитесь к администратору.';
             }
 
             return AjaxJson::createSuccess($arResult);
-
         } catch (\Exception $e) {
             $result = new \Bitrix\Main\Result();
             $result->addError(new \Bitrix\Main\Error($e->getMessage()), $e->getCode());
