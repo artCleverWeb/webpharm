@@ -2,6 +2,9 @@
 
 namespace Kolos\Studio\Tests;
 
+use Bitrix\Iblock\ElementPropertyTable;
+use Bitrix\Iblock\PropertyTable;
+
 class Test
 {
     private int $testId;
@@ -9,7 +12,7 @@ class Test
     private $questionEntity;
     private $resultEntity;
 
-    public function retryTest():bool
+    public function retryTest(): bool
     {
         return $this->getResultEntity()->deactivate();
     }
@@ -106,5 +109,53 @@ class Test
                     'cache_joins' => true
                 ],
             ]) ?? [];
+    }
+
+    public function getParent(): array
+    {
+        $parentInfo = \Bitrix\Iblock\ElementTable::getRow([
+            'filter' => [
+                'PROPERTY.CODE' => 'TEST',
+                'PROPERTY_VALUE.VALUE' => $this->testId,
+            ],
+            'select' => [
+                'ID',
+                'IBLOCK_ID',
+                'CODE',
+                'IBLOCK_PROPERTY_ID' => 'PROPERTY_VALUE.IBLOCK_PROPERTY_ID',
+                'IBLOCK_SECTION_ID',
+                'DETAIL_PAGE_URL' => 'IBLOCK.DETAIL_PAGE_URL',
+            ],
+            'runtime' => [
+                new \Bitrix\Main\ORM\Fields\Relations\Reference(
+                    'PROPERTY_VALUE',
+                    \Bitrix\Iblock\ElementPropertyTable::class,
+                    \Bitrix\Main\Entity\Query\Join::on('this.ID', 'ref.IBLOCK_ELEMENT_ID')
+                ),
+                new \Bitrix\Main\ORM\Fields\Relations\Reference(
+                    'PROPERTY',
+                    \Bitrix\Iblock\PropertyTable::class,
+                    \Bitrix\Main\Entity\Query\Join::on('ref.ID', 'this.IBLOCK_PROPERTY_ID')
+                )
+            ],
+            'cache' => [
+                'ttl' => 360000,
+                'cache_joins' => true
+            ],
+        ]);
+
+
+        if (count($parentInfo) > 0) {
+            $parentInfo['DETAIL_PAGE_URL'] = \CIBlock::ReplaceDetailUrl(
+                $parentInfo['DETAIL_PAGE_URL'],
+                $parentInfo,
+                false,
+                'E'
+            );
+
+            return $parentInfo;
+        }
+
+        return [];
     }
 }
