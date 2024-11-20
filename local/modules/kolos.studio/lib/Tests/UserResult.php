@@ -75,19 +75,43 @@ class UserResult
 
     public function finishTest(): void
     {
-        $this->deactivateOldResult();
+        $lastResult = $this->getLastResult();
         $percent = $this->calculateResult();
+
+        if(count($lastResult) > 0 && isset($lastResult['UF_CORRECT']) && $lastResult['UF_CORRECT'] <= $percent) {
+            $this->deactivateOldResult();
+        }
+
+        $active = isset($lastResult['UF_CORRECT']) && $lastResult['UF_CORRECT'] <= $percent;
 
         $data = [
             'UF_USER_ID' => $this->userId,
             'UF_TEST_ID' => $this->testId,
             'UF_CORRECT' => $percent,
-            'UF_ACTIVE' => 1,
+            'UF_ACTIVE' => $active ? 1 : 0,
+            'UF_FINISHED' => $this->getStatusTest($this->testId) ? 1 : 0,
         ];
 
         $id = $this->getEntity()->add($data);
 
         $this->calculateBalance($data, $id);
+    }
+
+    private function getStatusTest(int $testId, int $value): bool
+    {
+        $testEntity = new Test();
+        $testEntity->setTestId($testId);
+        $testInfo = $testEntity->getInfo();
+
+        if (count($testInfo) < 0) {
+            return false;
+        }
+
+        if ($testInfo['UF_COMPLETED_SCORE'] > $value) {
+            return false;
+        }
+
+        return true;
     }
 
     private function calculateBalance(array $data, int $id): bool

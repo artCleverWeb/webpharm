@@ -78,7 +78,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                                 Поле заполнено неверно
                             </div>
                         </div>
-                        <div v-if="showTimerNeed">Показывать таймер</div>
+                        <div v-if="showTimerNeed" class="sms-show__time">Повторная отправка смс возможна через 1 минуту</div>
                         <div class="form__item form__item_submit" v-if="showBtnSendSms">
                             <button type="submit" name="send" value="Y"
                                     class="button-a button-a_size-1 button-a_wide form__button-submit"

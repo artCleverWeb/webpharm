@@ -42,7 +42,7 @@ class IblockDouuble extends \CBitrixComponent implements Controllerable
                 "IBLOCK_ID" => IntVal($arParams['IBLOCK_ID']),
                 "ACTIVE_DATE" => "Y",
                 "ACTIVE" => "Y",
-                "INCLUDE_SUBSECTIONS" => 'Y',
+              //  "INCLUDE_SUBSECTIONS" => 'Y',
             ];
 
             if (!is_null($arParams['SECTION_CODE'])) {

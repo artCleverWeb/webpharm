@@ -148,7 +148,7 @@ class UserProfile extends \CBitrixComponent implements Controllerable
                             $arResult["errors"][] = $obNewUser->LAST_ERROR;
                         } else {
                             $message = "Логин: " . $arParams["mobile"] . " и пароль: " . $sPasswd . " для " . $_SERVER["HTTP_HOST"];
-                            // CIWebSMS::Send($arParams["mobile"], $message);
+                            CIWebSMS::Send($arParams["mobile"], $message);
                             afterSmsSend($arParams["mobile"], $message);
                             $arResult["state"] = true;
                         }
